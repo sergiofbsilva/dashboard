@@ -5,7 +5,7 @@ import module.dashBoard.presentationTier.DashBoardManagementAction;
 
 import org.apache.struts.action.ActionForward;
 
-public class TestWidget implements StrutsWidget {
+public class TestWidget implements WidgetController {
 
     @Override
     public String getName() {

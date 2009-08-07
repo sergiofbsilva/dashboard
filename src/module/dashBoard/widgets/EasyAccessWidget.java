@@ -12,7 +12,7 @@ import myorg.util.VariantBean;
 import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForward;
 
-public class EasyAccessWidget implements StrutsWidget {
+public class EasyAccessWidget implements WidgetController {
 
     @Override
     public String getName() {

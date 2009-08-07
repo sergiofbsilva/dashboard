@@ -18,11 +18,11 @@
 
 <table>
 <logic:iterate id="widget" name="widgets">
-	<bean:define id="widgetId" name="widget" property="externalId"/>
+	<bean:define id="widgetClassName" name="widget" property="name"/>
 	<tr>
-		<td><fr:view name="widget" property="name"/></td>
+		<td><fr:view name="widgetClassName"/></td>
 		<td>
-			<html:link page="<%= "/dashBoardManagement.do?method=addWidget&dashBoardWidgetId=" + widgetId%>" paramId="dashBoardId" paramName="dashBoard" paramProperty="externalId">
+			<html:link page="<%= "/dashBoardManagement.do?method=addWidget&dashBoardWidgetClass=" + widgetClassName%>" paramId="dashBoardId" paramName="dashBoard" paramProperty="externalId">
 				<bean:message key="link.add" bundle="MYORG_RESOURCES"/>
 			</html:link>
 		</td>

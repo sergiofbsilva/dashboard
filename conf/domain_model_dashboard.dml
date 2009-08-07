@@ -8,10 +8,6 @@ class DashBoardColumn {
 	int columnOrder;
 }
 
-class WidgetPlacement {
-
-}
-
 class DashBoardWidget {
 	String widgetClassName;
 }
@@ -28,19 +24,12 @@ relation DashBoardPanelDashBoardColumn {
 	}
 }
 
-relation DashBoardColumnWidgetPlacement {
+relation DashBoardColumnDashBoardWidget {
 	DashBoardColumn playsRole dashBoardColumn;
-	WidgetPlacement playsRole placements {
+	DashBoardWidget playsRole widgets {
 		multiplicity *;
 	}
-}
-
-relation WidgetPlacementDashBoardWidget {
-	WidgetPlacement playsRole placements {
-		multiplicity *;
-	}
-	DashBoardWidget playsRole widget; 
-}
+}	
 
 relation DashBoardDashBoardController {
 	DashBoardController playsRole dashBoardController;
@@ -59,13 +48,6 @@ relation DashBoardWidgetDashBoardController {
 relation DashBoardColumnDashBoardController {
 	DashBoardController playsRole dashBoardController;
 	DashBoardColumn playsRole dashBoardColumns {
-		multiplicity *;
-	}
-}
-
-relation WidgetPlacementDashBoardController {
-	DashBoardController playsRole dashBoardController;
-	WidgetPlacement playsRole widgetPlacements {
 		multiplicity *;
 	}
 }

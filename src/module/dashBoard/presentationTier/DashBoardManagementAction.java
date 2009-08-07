@@ -6,13 +6,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import module.dashBoard.WidgetRegister;
 import module.dashBoard.WidgetRequest;
 import module.dashBoard.domain.DashBoardColumn;
 import module.dashBoard.domain.DashBoardColumnBean;
 import module.dashBoard.domain.DashBoardController;
 import module.dashBoard.domain.DashBoardPanel;
 import module.dashBoard.domain.DashBoardWidget;
-import module.dashBoard.widgets.StrutsWidget;
+import module.dashBoard.widgets.WidgetController;
 import module.dashBoard.widgets.TestWidget;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.presentationTier.actions.ContextBaseAction;
@@ -95,7 +96,7 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	WidgetRequest widgetRequest = new WidgetRequest(request, response, panel, UserView.getCurrentUser());
 
 	for (DashBoardWidget widget : panel.getWidgetsSet()) {
-	    widget.getController().onLoad(widgetRequest);
+	    widget.getWidgetController().onLoad(widgetRequest);
 	}
 	return forward(request, "/dashBoardPanel/viewDashBoard.jsp");
     }
@@ -103,11 +104,8 @@ public class DashBoardManagementAction extends ContextBaseAction {
     public ActionForward removeWidgetFromColumn(final ActionMapping mapping, final ActionForm form,
 	    final HttpServletRequest request, final HttpServletResponse response) {
 
-	DashBoardPanel panel = getDomainObject(request, "dashBoardId");
-	Integer columnIndex = Integer.valueOf(request.getParameter("dashBoardColumnIndex"));
-	DashBoardColumn column = panel.getColumn(columnIndex);
 	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
-	column.removeWidget(widget);
+	widget.delete();
 	return viewDashBoardPanel(mapping, form, request, response);
     }
 
@@ -116,16 +114,26 @@ public class DashBoardManagementAction extends ContextBaseAction {
 
 	DashBoardPanel panel = getDomainObject(request, "dashBoardId");
 	request.setAttribute("dashBoard", panel);
-	request.setAttribute("widgets", DashBoardController.getInstance().getAvailableWidgets());
+	request.setAttribute("widgets", WidgetRegister.getAvailableWidgets());
 	return forward(request, "/dashBoardPanel/addWidget.jsp");
     }
 
     public ActionForward addWidget(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) {
 
-	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
+	String widgetClassName = request.getParameter("dashBoardWidgetClass");
+	Class<? extends WidgetController> className = null;
+	try {
+	    className = (Class<? extends WidgetController>) Class.forName(widgetClassName);
+	} catch (Exception e) {
+	    // TODO ADD ERROR MESSAGE
+	    // and return
+	    e.printStackTrace();
+	}
+
+	DashBoardWidget widget = DashBoardWidget.newWidget(className);
 	DashBoardPanel panel = getDomainObject(request, "dashBoardId");
-	panel.getColumn(0).addWidget(widget);
+	panel.addWidgetToColumn(0, widget);
 	return viewDashBoardPanel(mapping, form, request, response);
     }
 
@@ -134,7 +142,7 @@ public class DashBoardManagementAction extends ContextBaseAction {
 
 	DashBoardPanel panel = getDomainObject(request, "dashBoardId");
 	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
-	StrutsWidget strutsWidget = widget.getController();
+	WidgetController strutsWidget = widget.getWidgetController();
 	return strutsWidget.widgetSubmission(new WidgetRequest(request, response, panel, UserView.getCurrentUser()));
     }
 
@@ -154,8 +162,6 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	}
 
 	DashBoardPanel panel = new DashBoardPanel();
-	DashBoardWidget widget = new DashBoardWidget(TestWidget.class);
-	panel.addWidgetToColumn(1, widget);
 	return panel;
     }
 }

@@ -4,7 +4,7 @@ import module.dashBoard.WidgetRequest;
 
 import org.apache.struts.action.ActionForward;
 
-public interface StrutsWidget {
+public interface WidgetController {
 
     public void onLoad(WidgetRequest request);
 

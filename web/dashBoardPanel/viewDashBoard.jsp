@@ -60,8 +60,6 @@ $(function() {
 
 		$(".portlet-header .ui-icon-closethick").click(function() {
 			var form = $(this).next();
-			var columnId = $(this).parent().parent().parent().attr('id');
-			form.children("[name=dashBoardColumnIndex]").attr('value',columnId.substring(columnId.indexOf("-")+1));
 			form.submit();
 		});
 
@@ -83,11 +81,10 @@ $(function() {
 					<div class="portlet-header">
 						<fr:view name="widget" property="name"/>
 						<fr:form action="<%= "/dashBoardManagement.do?method=removeWidgetFromColumn&dashBoardId=" + dashBoardId + "&dashBoardWidgetId=" + widgetId %>">
-							<html:hidden property="dashBoardColumnIndex" value=""/>
 						</fr:form>
 					</div>
 					<div class="portlet-content">
-						<jsp:include page="<%= WidgetBodyResolver.getBodyFor(widget.getController().getClass()) %>" flush="false"/>
+						<jsp:include page="<%= WidgetBodyResolver.getBodyFor(widget.getWidgetController().getClass()) %>" flush="false"/>
 					</div>
 				</div>
 			</logic:iterate>
