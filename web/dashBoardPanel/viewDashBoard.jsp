@@ -74,12 +74,12 @@ $(function() {
 	<logic:iterate id="column" indexId="index" name="dashBoard" property="orderedColumns">
 		<div id="<%= "column-" + index %>" class="column">
 			<bean:define id="columnId" name="column" property="externalId"/>
-			<logic:iterate id="widget" name="column" property="widgets" type="module.dashBoard.domain.DashBoardWidget">
+			<logic:iterate id="widget" name="column" property="orderedWidgets" type="module.dashBoard.domain.DashBoardWidget">
 				<bean:define id="widget" name="widget" toScope="request" type="module.dashBoard.domain.DashBoardWidget"/>
 				<bean:define id="widgetId" name="widget" property="externalId" type="java.lang.String" />
 				<div id="<%= widgetId %>" class="portlet">
 					<div class="portlet-header">
-						<fr:view name="widget" property="name"/>
+						<fr:view name="widget" property="widgetController.class" layout="name-resolver"/>
 						<fr:form action="<%= "/dashBoardManagement.do?method=removeWidgetFromColumn&dashBoardId=" + dashBoardId + "&dashBoardWidgetId=" + widgetId %>">
 						</fr:form>
 					</div>

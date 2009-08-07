@@ -60,7 +60,7 @@ public class DashBoardPanel extends DashBoardPanel_Base {
     }
 
     public Set<DashBoardColumn> getOrderedColumns() {
-	Set<DashBoardColumn> columns = new TreeSet<DashBoardColumn>(new BeanComparator("columnOrder"));
+	Set<DashBoardColumn> columns = new TreeSet<DashBoardColumn>(DashBoardColumn.IN_PANEL_COMPARATOR);
 	columns.addAll(getDashBoardColumns());
 	return columns;
     }

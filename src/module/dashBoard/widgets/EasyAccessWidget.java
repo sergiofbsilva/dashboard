@@ -3,10 +3,12 @@ package module.dashBoard.widgets;
 import java.util.Set;
 
 import module.dashBoard.WidgetRequest;
+import module.dashBoard.domain.DashBoardWidget;
 import module.dashBoard.presentationTier.DashBoardManagementAction;
 import module.metaWorkflow.domain.WorkflowMetaProcess;
 import module.workflow.domain.WorkflowProcess;
 import module.workflow.presentationTier.actions.ProcessManagement;
+import myorg.util.ClassNameResolver;
 import myorg.util.VariantBean;
 
 import org.apache.commons.collections.Predicate;
@@ -14,9 +16,9 @@ import org.apache.struts.action.ActionForward;
 
 public class EasyAccessWidget implements WidgetController {
 
-    @Override
-    public String getName() {
-	return getClass().getSimpleName();
+    static {
+	ClassNameResolver.registerType(EasyAccessWidget.class, "resources/DashBoardResources", "widget.title."
+		+ EasyAccessWidget.class.getSimpleName());
     }
 
     @Override
@@ -40,6 +42,14 @@ public class EasyAccessWidget implements WidgetController {
 	}
 
 	return DashBoardManagementAction.forwardToDashBoard(request);
+    }
+
+    @Override
+    public void init(DashBoardWidget widget) {
+    }
+
+    @Override
+    public void kill(DashBoardWidget widget) {
     }
 
 }

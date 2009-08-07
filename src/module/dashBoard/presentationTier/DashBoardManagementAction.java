@@ -16,6 +16,7 @@ import module.dashBoard.domain.DashBoardWidget;
 import module.dashBoard.widgets.WidgetController;
 import module.dashBoard.widgets.TestWidget;
 import myorg.applicationTier.Authenticate.UserView;
+import myorg.domain.User;
 import myorg.presentationTier.actions.ContextBaseAction;
 
 import org.apache.struts.action.ActionForm;
@@ -93,9 +94,10 @@ public class DashBoardManagementAction extends ContextBaseAction {
 
 	DashBoardPanel panel = getDomainObject(request, "dashBoardId");
 	request.setAttribute("dashBoard", panel);
-	WidgetRequest widgetRequest = new WidgetRequest(request, response, panel, UserView.getCurrentUser());
+	User currentUser = UserView.getCurrentUser();
 
 	for (DashBoardWidget widget : panel.getWidgetsSet()) {
+	    WidgetRequest widgetRequest = new WidgetRequest(request, response, panel, currentUser, widget.getStateObject());
 	    widget.getWidgetController().onLoad(widgetRequest);
 	}
 	return forward(request, "/dashBoardPanel/viewDashBoard.jsp");
@@ -105,8 +107,9 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	    final HttpServletRequest request, final HttpServletResponse response) {
 
 	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
+	DashBoardPanel dashBoardPanel = widget.getDashBoardColumn().getDashBoardPanel();
 	widget.delete();
-	return viewDashBoardPanel(mapping, form, request, response);
+	return forwardToDashBoard(dashBoardPanel, request);
     }
 
     public ActionForward prepareAddWidget(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
@@ -134,7 +137,7 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	DashBoardWidget widget = DashBoardWidget.newWidget(className);
 	DashBoardPanel panel = getDomainObject(request, "dashBoardId");
 	panel.addWidgetToColumn(0, widget);
-	return viewDashBoardPanel(mapping, form, request, response);
+	return forwardToDashBoard(panel, request);
     }
 
     public ActionForward widgetSubmition(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
@@ -143,7 +146,8 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	DashBoardPanel panel = getDomainObject(request, "dashBoardId");
 	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
 	WidgetController strutsWidget = widget.getWidgetController();
-	return strutsWidget.widgetSubmission(new WidgetRequest(request, response, panel, UserView.getCurrentUser()));
+	return strutsWidget.widgetSubmission(new WidgetRequest(request, response, panel, UserView.getCurrentUser(), widget
+		.getStateObject()));
     }
 
     public final ActionForward doTest(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,

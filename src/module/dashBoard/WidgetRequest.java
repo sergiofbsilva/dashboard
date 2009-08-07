@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.DomainObject;
 
 import module.dashBoard.domain.DashBoardPanel;
 import myorg.domain.User;
@@ -17,12 +18,23 @@ public class WidgetRequest {
 
     private DashBoardPanel panel;
     private User currentUser;
+    private DomainObject stateObject;
 
-    public WidgetRequest(HttpServletRequest request, HttpServletResponse response, DashBoardPanel panel, User user) {
+    public WidgetRequest(HttpServletRequest request, HttpServletResponse response, DashBoardPanel panel, User user,
+	    DomainObject objectState) {
 	this.request = request;
 	this.response = response;
 	this.panel = panel;
 	this.currentUser = user;
+	this.stateObject = objectState;
+    }
+
+    public DomainObject getStateObject() {
+	return stateObject;
+    }
+
+    public void setStateObject(DomainObject objectState) {
+	this.stateObject = objectState;
     }
 
     public User getCurrentUser() {

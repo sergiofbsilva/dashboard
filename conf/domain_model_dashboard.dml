@@ -9,9 +9,14 @@ class DashBoardColumn {
 }
 
 class DashBoardWidget {
+	String stateObjectId;
+	int orderInColumn;
 	String widgetClassName;
 }
 
+class Note {
+	String text;
+}
 
 class DashBoardController {
 	
@@ -48,6 +53,13 @@ relation DashBoardWidgetDashBoardController {
 relation DashBoardColumnDashBoardController {
 	DashBoardController playsRole dashBoardController;
 	DashBoardColumn playsRole dashBoardColumns {
+		multiplicity *;
+	}
+}
+
+relation NoteDashBoardController {
+	DashBoardController playsRole dashBoardController;
+	Note playsRole notes {
 		multiplicity *;
 	}
 }

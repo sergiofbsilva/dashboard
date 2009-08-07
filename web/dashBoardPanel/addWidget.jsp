@@ -20,7 +20,7 @@
 <logic:iterate id="widget" name="widgets">
 	<bean:define id="widgetClassName" name="widget" property="name"/>
 	<tr>
-		<td><fr:view name="widgetClassName"/></td>
+		<td><fr:view name="widget" layout="name-resolver"/></td>
 		<td>
 			<html:link page="<%= "/dashBoardManagement.do?method=addWidget&dashBoardWidgetClass=" + widgetClassName%>" paramId="dashBoardId" paramName="dashBoard" paramProperty="externalId">
 				<bean:message key="link.add" bundle="MYORG_RESOURCES"/>

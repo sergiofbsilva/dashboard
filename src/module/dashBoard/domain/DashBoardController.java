@@ -2,6 +2,7 @@ package module.dashBoard.domain;
 
 import module.dashBoard.WidgetRegister;
 import module.dashBoard.widgets.EasyAccessWidget;
+import module.dashBoard.widgets.NoteWidget;
 import module.dashBoard.widgets.TestWidget;
 import myorg.domain.MyOrg;
 import pt.ist.fenixWebFramework.services.Service;
@@ -51,6 +52,7 @@ public class DashBoardController extends DashBoardController_Base {
     private static void registerKnownWidgets() {
 	WidgetRegister.registerWidget(TestWidget.class);
 	WidgetRegister.registerWidget(EasyAccessWidget.class);
+	WidgetRegister.registerWidget(NoteWidget.class);
     }
 
 }
