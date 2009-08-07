@@ -1,0 +1,76 @@
+package module.dashBoard.domain; 
+
+class DashBoardPanel {
+
+}
+
+class DashBoardColumn {
+	int columnOrder;
+}
+
+class WidgetPlacement {
+
+}
+
+class DashBoardWidget {
+	String widgetClassName;
+}
+
+
+class DashBoardController {
+	
+}
+
+relation DashBoardPanelDashBoardColumn {
+	DashBoardPanel playsRole dashBoardPanel;
+	DashBoardColumn playsRole dashBoardColumns {
+		multiplicity *;
+	}
+}
+
+relation DashBoardColumnWidgetPlacement {
+	DashBoardColumn playsRole dashBoardColumn;
+	WidgetPlacement playsRole placements {
+		multiplicity *;
+	}
+}
+
+relation WidgetPlacementDashBoardWidget {
+	WidgetPlacement playsRole placements {
+		multiplicity *;
+	}
+	DashBoardWidget playsRole widget; 
+}
+
+relation DashBoardDashBoardController {
+	DashBoardController playsRole dashBoardController;
+	DashBoardPanel playsRole panels {
+		multiplicity *;
+	}
+}
+
+relation DashBoardWidgetDashBoardController {
+	DashBoardController playsRole dashBoardController;
+	DashBoardWidget playsRole availableWidgets {
+		multiplicity *;
+	}
+}
+
+relation DashBoardColumnDashBoardController {
+	DashBoardController playsRole dashBoardController;
+	DashBoardColumn playsRole dashBoardColumns {
+		multiplicity *;
+	}
+}
+
+relation WidgetPlacementDashBoardController {
+	DashBoardController playsRole dashBoardController;
+	WidgetPlacement playsRole widgetPlacements {
+		multiplicity *;
+	}
+}
+
+relation DashBoardControllerMyOrg {
+	DashBoardController playsRole dashBoardController;
+	.myorg.domain.MyOrg playsRole myOrg;
+}
