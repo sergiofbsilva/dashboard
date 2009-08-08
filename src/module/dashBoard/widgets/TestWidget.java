@@ -36,4 +36,9 @@ public class TestWidget implements WidgetController {
 	throw new UnsupportedOperationException();
     }
 
+    @Override
+    public boolean isEditionModeSupported() {
+	return false;
+    }
+
 }

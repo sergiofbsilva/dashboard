@@ -61,8 +61,13 @@ public class DashBoardWidget extends DashBoardWidget_Base {
 	setStateObjectId(domainObject.getExternalId());
     }
 
+    public boolean isEditionModeSupported() {
+	return getWidgetController().isEditionModeSupported();
+    }
+
     @Service
     public static DashBoardWidget newWidget(Class<? extends WidgetController> widgetClass) {
 	return new DashBoardWidget(widgetClass);
     }
+
 }

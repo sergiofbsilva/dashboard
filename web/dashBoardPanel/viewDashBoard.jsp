@@ -53,16 +53,19 @@ $(function() {
 
 		$(".portlet").addClass("ui-widget ui-widget-content ui-helper-clearfix ui-corner-all")
 		.find(".portlet-header")
-			.addClass("ui-widget-header ui-corner-top")
-			.prepend('<span class="ui-icon ui-icon-closethick"></span>')
-			.end()
+			.addClass("ui-widget-header ui-corner-top").end()
 		.find(".portlet-content");
 
-		$(".portlet-header .ui-icon-closethick").click(function() {
-			var form = $(this).next();
+		$(".portlet-header .ui-icon-close").click(function() {
+			var form = $(this).nextAll("form.close");
 			form.submit();
 		});
-
+				
+		$(".portlet-header .ui-icon-pencil").click(function() {
+			var form = $(this).nextAll("form.edit");
+			form.submit();
+		});
+		
 		$(".column").disableSelection();
 
 		
@@ -79,9 +82,16 @@ $(function() {
 				<bean:define id="widgetId" name="widget" property="externalId" type="java.lang.String" />
 				<div id="<%= widgetId %>" class="portlet">
 					<div class="portlet-header">
+						<span class="ui-icon ui-icon-close"></span>
+						<logic:equal name="widget" property="editionModeSupported" value="true">
+							<span class="ui-icon ui-icon-pencil"></span>
+						</logic:equal>
+						
 						<fr:view name="widget" property="widgetController.class" layout="name-resolver"/>
-						<fr:form action="<%= "/dashBoardManagement.do?method=removeWidgetFromColumn&dashBoardId=" + dashBoardId + "&dashBoardWidgetId=" + widgetId %>">
-						</fr:form>
+						<form class="close" method="post" action="<%= request.getContextPath() + "/dashBoardManagement.do?method=removeWidgetFromColumn&dashBoardId=" + dashBoardId + "&dashBoardWidgetId=" + widgetId %>">
+						</form>
+						<form class="edit" method="post" action="<%= request.getContextPath() + "/dashBoardManagement.do?method=requestWidgetEdit&dashBoardId=" + dashBoardId + "&dashBoardWidgetId=" + widgetId %>">
+						</form>
 					</div>
 					<div class="portlet-content">
 						<jsp:include page="<%= WidgetBodyResolver.getBodyFor(widget.getWidgetController().getClass()) %>" flush="false"/>

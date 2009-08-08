@@ -50,4 +50,9 @@ public class NoteWidget implements WidgetController {
 	request.setAttribute("edit-note-" + objectState.getExternalId(), objectState);
     }
 
+    @Override
+    public boolean isEditionModeSupported() {
+	return true;
+    }
+
 }

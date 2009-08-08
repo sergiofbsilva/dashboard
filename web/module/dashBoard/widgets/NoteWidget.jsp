@@ -26,5 +26,4 @@
 	<p>
 	<fr:view name="<%= "note-" + stateObjectId %>" property="text" type="java.lang.String"/>
 	</p>
-	<html:link page="<%= "/dashBoardManagement.do?method=requestWidgetEdit&dashBoardId=" + dashBoardId + "&dashBoardWidgetId=" + widgetId%>">Edit</html:link>
 </logic:notPresent>

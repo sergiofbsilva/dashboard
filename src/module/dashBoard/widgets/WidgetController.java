@@ -15,6 +15,8 @@ public interface WidgetController {
 
     public void requestEdit(WidgetRequest request);
 
+    public boolean isEditionModeSupported();
+    
     public ActionForward widgetSubmission(WidgetRequest request);
 
 }
