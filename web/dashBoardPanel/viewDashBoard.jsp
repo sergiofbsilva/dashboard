@@ -53,7 +53,7 @@ $(function() {
 
 		$(".portlet").addClass("ui-widget ui-widget-content ui-helper-clearfix ui-corner-all")
 		.find(".portlet-header")
-			.addClass("ui-corner-top")
+			.addClass("ui-widget-header ui-corner-top")
 			.prepend('<span class="ui-icon ui-icon-closethick"></span>')
 			.end()
 		.find(".portlet-content");

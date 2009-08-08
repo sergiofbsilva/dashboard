@@ -44,4 +44,10 @@ public class NoteWidget implements WidgetController {
 	note.delete();
     }
 
+    @Override
+    public void requestEdit(WidgetRequest request) {
+	DomainObject objectState = request.getStateObject();
+	request.setAttribute("edit-note-" + objectState.getExternalId(), objectState);
+    }
+
 }

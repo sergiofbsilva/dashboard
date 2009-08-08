@@ -7,4 +7,18 @@
 <bean:define id="dashBoardId" name="dashBoard" property="externalId"/>
 <bean:define id="widgetId" name="widget" property="externalId"/>
 
-<fr:edit id="processId" name="bean" slot="string" action="<%= "/dashBoardManagement.do?method=widgetSubmition&dashBoardId=" + dashBoardId + "&dashBoardWidgetId=" + widgetId%>"/>
+<fr:form action="<%= "/dashBoardManagement.do?method=widgetSubmition&dashBoardId=" + dashBoardId + "&dashBoardWidgetId=" + widgetId%>">
+	<table>
+		<tr>
+			<td>
+				Pesquisar
+			</td>
+			<td>
+				<fr:edit id="processId" name="bean" slot="string"/>
+			</td>
+			<td>
+				<html:submit styleClass="inputbutton">Go</html:submit>
+			</td>
+		</tr>
+	</table>
+</fr:form>

@@ -150,6 +150,17 @@ public class DashBoardManagementAction extends ContextBaseAction {
 		.getStateObject()));
     }
 
+    public ActionForward requestWidgetEdit(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+
+	DashBoardPanel panel = getDomainObject(request, "dashBoardId");
+	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
+	WidgetController strutsWidget = widget.getWidgetController();
+	strutsWidget.requestEdit(new WidgetRequest(request, response, panel, UserView.getCurrentUser(), widget.getStateObject()));
+
+	return viewDashBoardPanel(mapping, form, request, response);
+    }
+
     public final ActionForward doTest(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) {
 

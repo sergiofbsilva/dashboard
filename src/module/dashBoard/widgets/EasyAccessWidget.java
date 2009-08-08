@@ -52,4 +52,9 @@ public class EasyAccessWidget implements WidgetController {
     public void kill(DashBoardWidget widget) {
     }
 
+    @Override
+    public void requestEdit(WidgetRequest request) {
+	throw new UnsupportedOperationException();
+    }
+
 }

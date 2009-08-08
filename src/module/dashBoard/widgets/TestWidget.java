@@ -2,7 +2,6 @@ package module.dashBoard.widgets;
 
 import module.dashBoard.WidgetRequest;
 import module.dashBoard.domain.DashBoardWidget;
-import module.dashBoard.presentationTier.DashBoardManagementAction;
 import myorg.util.ClassNameResolver;
 
 import org.apache.struts.action.ActionForward;
@@ -21,8 +20,7 @@ public class TestWidget implements WidgetController {
 
     @Override
     public ActionForward widgetSubmission(WidgetRequest request) {
-	return DashBoardManagementAction.forwardToDashBoard(request);
-
+	throw new UnsupportedOperationException();
     }
 
     @Override
@@ -31,6 +29,11 @@ public class TestWidget implements WidgetController {
 
     @Override
     public void kill(DashBoardWidget widget) {
+    }
+
+    @Override
+    public void requestEdit(WidgetRequest request) {
+	throw new UnsupportedOperationException();
     }
 
 }

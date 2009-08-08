@@ -13,6 +13,8 @@ public interface WidgetController {
 
     public void onLoad(WidgetRequest request);
 
+    public void requestEdit(WidgetRequest request);
+
     public ActionForward widgetSubmission(WidgetRequest request);
 
 }
