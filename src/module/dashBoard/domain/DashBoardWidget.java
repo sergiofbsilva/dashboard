@@ -3,6 +3,7 @@ package module.dashBoard.domain;
 import java.util.Comparator;
 
 import module.dashBoard.widgets.WidgetController;
+import myorg.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
@@ -30,6 +31,9 @@ public class DashBoardWidget extends DashBoardWidget_Base {
     }
 
     public WidgetController getWidgetController() {
+	if (getDashBoardColumn() != null && !getDashBoardPanel().isAccessibleToCurrentUser()) {
+	    throw new DomainException("error.ilegal.access.to.widget");
+	}
 	if (instance == null) {
 	    initializeWidget();
 	}
@@ -63,6 +67,10 @@ public class DashBoardWidget extends DashBoardWidget_Base {
 
     public boolean isEditionModeSupported() {
 	return getWidgetController().isEditionModeSupported();
+    }
+
+    public DashBoardPanel getDashBoardPanel() {
+	return getDashBoardColumn().getDashBoardPanel();
     }
 
     @Service

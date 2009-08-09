@@ -88,9 +88,9 @@ $(function() {
 						</logic:equal>
 						
 						<fr:view name="widget" property="widgetController.class" layout="name-resolver"/>
-						<form class="close" method="post" action="<%= request.getContextPath() + "/dashBoardManagement.do?method=removeWidgetFromColumn&dashBoardId=" + dashBoardId + "&dashBoardWidgetId=" + widgetId %>">
+						<form class="close" method="post" action="<%= request.getContextPath() + "/dashBoardManagement.do?method=removeWidgetFromColumn&dashBoardWidgetId=" + widgetId %>">
 						</form>
-						<form class="edit" method="post" action="<%= request.getContextPath() + "/dashBoardManagement.do?method=requestWidgetEdit&dashBoardId=" + dashBoardId + "&dashBoardWidgetId=" + widgetId %>">
+						<form class="edit" method="post" action="<%= request.getContextPath() + "/dashBoardManagement.do?method=requestWidgetEdit&dashBoardWidgetId=" + widgetId %>">
 						</form>
 					</div>
 					<div class="portlet-content">

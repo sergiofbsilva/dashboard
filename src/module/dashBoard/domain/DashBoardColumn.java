@@ -28,7 +28,7 @@ public class DashBoardColumn extends DashBoardColumn_Base {
 
     @Service
     public void addWidget(DashBoardWidget widget) {
-	if (!getDashBoardPanel().isCurrentUserAbleToEdit()) {
+	if (!getDashBoardPanel().isAccessibleToCurrentUser()) {
 	    throw new DomainException("error.permission.denied");
 	}
 	for (DashBoardWidget existingWidget : getWidgets()) {
@@ -39,7 +39,7 @@ public class DashBoardColumn extends DashBoardColumn_Base {
 
     @Service
     public void removeWidget(DashBoardWidget widget) {
-	if (!getDashBoardPanel().isCurrentUserAbleToEdit()) {
+	if (!getDashBoardPanel().isAccessibleToCurrentUser()) {
 	    throw new DomainException("error.permission.denied");
 	}
 	super.removeWidgets(widget);

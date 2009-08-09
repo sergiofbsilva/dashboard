@@ -40,17 +40,17 @@ public class DashBoardPanel extends DashBoardPanel_Base {
 	getColumn(column).removeWidget(widget);
     }
 
-    public boolean isCurrentUserAbleToEdit() {
-	return isUserAbleToEdit(UserView.getCurrentUser());
+    public boolean isAccessibleToCurrentUser() {
+	return isAccessibleToUser(UserView.getCurrentUser());
     }
 
-    public boolean isUserAbleToEdit(User user) {
+    public boolean isAccessibleToUser(User user) {
 	return true;
     }
 
     @Service
     public void edit(List<DashBoardColumnBean> beans) {
-	if (!isCurrentUserAbleToEdit()) {
+	if (!isAccessibleToCurrentUser()) {
 	    throw new DomainException("error.permission.denied");
 	}
 	for (DashBoardColumnBean bean : beans) {
