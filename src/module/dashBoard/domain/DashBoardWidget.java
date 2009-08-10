@@ -69,6 +69,14 @@ public class DashBoardWidget extends DashBoardWidget_Base {
 	return getWidgetController().isEditionModeSupported();
     }
 
+    public boolean isHelpModeSupported() {
+	return getWidgetController().isHelpModeSupported();
+    }
+
+    public boolean isClosable() {
+	return getWidgetController().isClosable();
+    }
+
     public DashBoardPanel getDashBoardPanel() {
 	return getDashBoardColumn().getDashBoardPanel();
     }

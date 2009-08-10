@@ -3,7 +3,6 @@ package module.dashBoard.widgets;
 import java.util.Set;
 
 import module.dashBoard.WidgetRequest;
-import module.dashBoard.domain.DashBoardWidget;
 import module.dashBoard.presentationTier.DashBoardManagementAction;
 import module.metaWorkflow.domain.WorkflowMetaProcess;
 import module.workflow.domain.WorkflowProcess;
@@ -14,7 +13,7 @@ import myorg.util.VariantBean;
 import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForward;
 
-public class EasyAccessWidget implements WidgetController {
+public class EasyAccessWidget extends WidgetController {
 
     static {
 	ClassNameResolver.registerType(EasyAccessWidget.class, "resources/DashBoardResources", "widget.title."
@@ -22,12 +21,12 @@ public class EasyAccessWidget implements WidgetController {
     }
 
     @Override
-    public void onLoad(WidgetRequest request) {
+    public void doView(WidgetRequest request) {
 	request.setAttribute("bean", new VariantBean());
     }
 
     @Override
-    public ActionForward widgetSubmission(WidgetRequest request) {
+    public ActionForward doSubmit(WidgetRequest request) {
 	final String processNumber = request.getRenderedObject("processId");
 	Set<WorkflowMetaProcess> allProcesses = WorkflowProcess.getAllProcesses(WorkflowMetaProcess.class, new Predicate() {
 
@@ -42,24 +41,6 @@ public class EasyAccessWidget implements WidgetController {
 	}
 
 	return DashBoardManagementAction.forwardToDashBoard(request);
-    }
-
-    @Override
-    public void init(DashBoardWidget widget) {
-    }
-
-    @Override
-    public void kill(DashBoardWidget widget) {
-    }
-
-    @Override
-    public void requestEdit(WidgetRequest request) {
-	throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean isEditionModeSupported() {
-	return false;
     }
 
 }

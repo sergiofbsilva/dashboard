@@ -27,7 +27,6 @@ import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumF
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter.ChecksumPredicate;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixframework.pstm.AbstractDomainObject.UnableToDetermineIdException;
 
 @Mapping(path = "/dashBoardManagement")
 public class DashBoardManagementAction extends ContextBaseAction {
@@ -95,7 +94,7 @@ public class DashBoardManagementAction extends ContextBaseAction {
 
 	for (DashBoardWidget widget : panel.getWidgetsSet()) {
 	    WidgetRequest widgetRequest = new WidgetRequest(request, response, panel, currentUser, widget.getStateObject());
-	    widget.getWidgetController().onLoad(widgetRequest);
+	    widget.getWidgetController().doView(widgetRequest);
 	}
 	return forward(request, "/dashBoardPanel/viewDashBoard.jsp");
     }
@@ -121,7 +120,7 @@ public class DashBoardManagementAction extends ContextBaseAction {
 
 	DashBoardPanel panel = getDomainObject(request, "dashBoardId");
 	request.setAttribute("dashBoard", panel);
-	request.setAttribute("widgets", WidgetRegister.getAvailableWidgets());
+	request.setAttribute("widgets", WidgetRegister.getAvailableWidgets(panel, UserView.getCurrentUser()));
 	return forward(request, "/dashBoardPanel/addWidget.jsp");
     }
 
@@ -149,8 +148,8 @@ public class DashBoardManagementAction extends ContextBaseAction {
 
 	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
 	DashBoardPanel panel = widget.getDashBoardPanel();
-	WidgetController strutsWidget = widget.getWidgetController();
-	return strutsWidget.widgetSubmission(new WidgetRequest(request, response, panel, UserView.getCurrentUser(), widget
+	WidgetController strutsController = widget.getWidgetController();
+	return strutsController.doSubmit(new WidgetRequest(request, response, panel, UserView.getCurrentUser(), widget
 		.getStateObject()));
     }
 
@@ -160,9 +159,19 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
 	DashBoardPanel panel = widget.getDashBoardPanel();
 
-	WidgetController strutsWidget = widget.getWidgetController();
-	strutsWidget.requestEdit(new WidgetRequest(request, response, panel, UserView.getCurrentUser(), widget.getStateObject()));
+	WidgetController strutsController = widget.getWidgetController();
+	strutsController.doEdit(new WidgetRequest(request, response, panel, UserView.getCurrentUser(), widget.getStateObject()));
 
+	return viewDashBoardPanel(panel, request, response);
+    }
+
+    public ActionForward requestWidgetHelp(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+
+	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
+	DashBoardPanel panel = widget.getDashBoardPanel();
+
+	request.setAttribute("widget-help", widget);
 	return viewDashBoardPanel(panel, request, response);
     }
 

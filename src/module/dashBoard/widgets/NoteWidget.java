@@ -4,29 +4,18 @@ import module.dashBoard.WidgetRequest;
 import module.dashBoard.domain.DashBoardWidget;
 import module.dashBoard.domain.Note;
 import module.dashBoard.presentationTier.DashBoardManagementAction;
+import myorg.util.BundleUtil;
 import myorg.util.ClassNameResolver;
 
 import org.apache.struts.action.ActionForward;
 
 import pt.ist.fenixframework.DomainObject;
 
-public class NoteWidget implements WidgetController {
+public class NoteWidget extends WidgetController {
 
     static {
 	ClassNameResolver.registerType(NoteWidget.class, "resources/DashBoardResources", "widget.title."
 		+ NoteWidget.class.getSimpleName());
-    }
-
-    @Override
-    public void onLoad(WidgetRequest request) {
-	DomainObject objectState = request.getStateObject();
-	request.setAttribute("note-" + objectState.getExternalId(), objectState);
-
-    }
-
-    @Override
-    public ActionForward widgetSubmission(WidgetRequest request) {
-	return DashBoardManagementAction.forwardToDashBoard(request);
     }
 
     @Override
@@ -45,9 +34,10 @@ public class NoteWidget implements WidgetController {
     }
 
     @Override
-    public void requestEdit(WidgetRequest request) {
+    public void doView(WidgetRequest request) {
 	DomainObject objectState = request.getStateObject();
-	request.setAttribute("edit-note-" + objectState.getExternalId(), objectState);
+	request.setAttribute("note-" + objectState.getExternalId(), objectState);
+
     }
 
     @Override
@@ -55,4 +45,24 @@ public class NoteWidget implements WidgetController {
 	return true;
     }
 
+    @Override
+    public void doEdit(WidgetRequest request) {
+	DomainObject objectState = request.getStateObject();
+	request.setAttribute("edit-note-" + objectState.getExternalId(), objectState);
+    }
+
+    @Override
+    public ActionForward doSubmit(WidgetRequest request) {
+	return DashBoardManagementAction.forwardToDashBoard(request);
+    }
+
+    @Override
+    public boolean isHelpModeSupported() {
+	return true;
+    }
+
+    @Override
+    public String getHelp() {
+	return BundleUtil.getStringFromResourceBundle("resources/DashBoardResources", "widget.help.NoteWidget");
+    }
 }
