@@ -61,7 +61,7 @@ function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, remov
 						 	    { dashBoardWidgetId: widget.attr('id') },
 						    	function(data) { 
 									if(data['status'] == 'OK') {
-							 	   		widget.remove(); 
+							 	   		widget.fadeOut(); 
 						 	    	} else {
 						 	    		$("#dashBoardMessageContainer").empty();
 										$("#dashBoardMessageContainer").append('<div class="errorBox">' + errorMessage + '</div>');
