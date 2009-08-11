@@ -8,12 +8,10 @@ import java.util.TreeSet;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
 import myorg.domain.exceptions.DomainException;
-
-import org.apache.commons.beanutils.BeanComparator;
-
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class DashBoardPanel extends DashBoardPanel_Base {
+public abstract class DashBoardPanel extends DashBoardPanel_Base {
 
     public DashBoardPanel() {
 	super();
@@ -21,6 +19,12 @@ public class DashBoardPanel extends DashBoardPanel_Base {
 	    new DashBoardColumn(order, this);
 	}
 	setDashBoardController(DashBoardController.getInstance());
+
+    }
+
+    public DashBoardPanel(MultiLanguageString name) {
+	this();
+	setName(name);
     }
 
     public DashBoardColumn getColumn(int order) {
@@ -44,9 +48,7 @@ public class DashBoardPanel extends DashBoardPanel_Base {
 	return isAccessibleToUser(UserView.getCurrentUser());
     }
 
-    public boolean isAccessibleToUser(User user) {
-	return true;
-    }
+    public abstract boolean isAccessibleToUser(User user);
 
     @Service
     public void edit(List<DashBoardColumnBean> beans) {

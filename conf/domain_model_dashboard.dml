@@ -1,6 +1,10 @@
 package module.dashBoard.domain; 
 
 class DashBoardPanel {
+	MultiLanguageString name;
+}
+
+class UserDashBoardPanel extends DashBoardPanel {
 
 }
 
@@ -67,4 +71,11 @@ relation NoteDashBoardController {
 relation DashBoardControllerMyOrg {
 	DashBoardController playsRole dashBoardController;
 	.myorg.domain.MyOrg playsRole myOrg;
+}
+
+relation UserDashBoardPanelUser {
+	UserDashBoardPanel playsRole userDashBoards {
+		multiplicity *;
+	}
+	.myorg.domain.User playsRole user;
 }
