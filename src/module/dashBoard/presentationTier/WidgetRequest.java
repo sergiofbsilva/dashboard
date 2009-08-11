@@ -1,4 +1,4 @@
-package module.dashBoard;
+package module.dashBoard.presentationTier;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +35,7 @@ public class WidgetRequest {
 	return currentUser;
     }
 
-    public HttpServletRequest getRequest() {
+    protected HttpServletRequest getRequest() {
 	return request;
     }
 

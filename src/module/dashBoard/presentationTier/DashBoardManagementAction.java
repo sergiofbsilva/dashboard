@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import module.dashBoard.WidgetRegister;
-import module.dashBoard.WidgetRequest;
 import module.dashBoard.domain.DashBoardColumnBean;
 import module.dashBoard.domain.DashBoardController;
 import module.dashBoard.domain.DashBoardPanel;
@@ -159,7 +158,6 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	    final HttpServletResponse response) {
 
 	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
-	DashBoardPanel panel = widget.getDashBoardPanel();
 	WidgetController strutsController = widget.getWidgetController();
 	return strutsController.doSubmit(new WidgetRequest(request, response, widget, UserView.getCurrentUser()));
     }

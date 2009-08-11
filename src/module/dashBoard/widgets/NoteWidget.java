@@ -1,9 +1,9 @@
 package module.dashBoard.widgets;
 
-import module.dashBoard.WidgetRequest;
 import module.dashBoard.domain.DashBoardWidget;
 import module.dashBoard.domain.Note;
 import module.dashBoard.presentationTier.DashBoardManagementAction;
+import module.dashBoard.presentationTier.WidgetRequest;
 import myorg.domain.User;
 import myorg.util.BundleUtil;
 import myorg.util.ClassNameResolver;

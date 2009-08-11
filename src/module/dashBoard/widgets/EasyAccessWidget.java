@@ -2,8 +2,8 @@ package module.dashBoard.widgets;
 
 import java.util.Set;
 
-import module.dashBoard.WidgetRequest;
 import module.dashBoard.presentationTier.DashBoardManagementAction;
+import module.dashBoard.presentationTier.WidgetRequest;
 import module.metaWorkflow.domain.WorkflowMetaProcess;
 import module.workflow.domain.WorkflowProcess;
 import module.workflow.presentationTier.actions.ProcessManagement;

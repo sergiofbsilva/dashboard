@@ -1,11 +1,11 @@
 package module.dashBoard.widgets;
 
-import module.dashBoard.WidgetRequest;
+import org.apache.struts.action.ActionForward;
+
 import module.dashBoard.domain.DashBoardWidget;
 import module.dashBoard.presentationTier.DashBoardManagementAction;
+import module.dashBoard.presentationTier.WidgetRequest;
 import myorg.domain.User;
-
-import org.apache.struts.action.ActionForward;
 
 public abstract class WidgetController {
 
@@ -15,8 +15,10 @@ public abstract class WidgetController {
      * in the StateObject.
      * 
      * 
-     * @param widget The widget that will store this WidgetController
-     * @param user The user that is creating the widget
+     * @param widget
+     *            The widget that will store this WidgetController
+     * @param user
+     *            The user that is creating the widget
      */
     public void init(DashBoardWidget widget, User user) {
 
@@ -27,8 +29,10 @@ public abstract class WidgetController {
      * controller is killed this is used for example to also delete the
      * StateObject
      * 
-     * @param widget The widget that is being deleted
-     * @param user The user that is deleting the widget
+     * @param widget
+     *            The widget that is being deleted
+     * @param user
+     *            The user that is deleting the widget
      */
     public void kill(DashBoardWidget widget, User user) {
 
@@ -38,7 +42,7 @@ public abstract class WidgetController {
      * This method is called when there is a request to view a widget in the
      * DashBoardPanel
      * 
-     * @param request 
+     * @param request
      */
 
     public abstract void doView(WidgetRequest request);

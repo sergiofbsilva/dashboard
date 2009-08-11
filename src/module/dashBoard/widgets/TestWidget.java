@@ -1,6 +1,6 @@
 package module.dashBoard.widgets;
 
-import module.dashBoard.WidgetRequest;
+import module.dashBoard.presentationTier.WidgetRequest;
 import myorg.util.ClassNameResolver;
 
 public class TestWidget extends WidgetController {
@@ -13,11 +13,6 @@ public class TestWidget extends WidgetController {
     @Override
     public void doView(WidgetRequest request) {
 	request.setAttribute("xpto", request.getCurrentUser());
-    }
-
-    @Override
-    public boolean isClosable() {
-	return false;
     }
 
 }
