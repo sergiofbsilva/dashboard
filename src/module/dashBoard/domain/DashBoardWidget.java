@@ -51,6 +51,12 @@ public class DashBoardWidget extends DashBoardWidget_Base {
 
     @Service
     public void delete() {
+	if (!isClosable()) {
+	    throw new UnsupportedOperationException();
+	}
+	if (!getDashBoardPanel().isAccessibleToCurrentUser()) {
+	    throw new DomainException("error.ilegal.access.to.widget");
+	}
 	removeDashBoardColumn();
 	removeDashBoardController();
 	getWidgetController().kill(this);
