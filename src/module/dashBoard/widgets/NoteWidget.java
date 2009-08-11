@@ -4,6 +4,7 @@ import module.dashBoard.WidgetRequest;
 import module.dashBoard.domain.DashBoardWidget;
 import module.dashBoard.domain.Note;
 import module.dashBoard.presentationTier.DashBoardManagementAction;
+import myorg.domain.User;
 import myorg.util.BundleUtil;
 import myorg.util.ClassNameResolver;
 
@@ -19,7 +20,7 @@ public class NoteWidget extends WidgetController {
     }
 
     @Override
-    public void init(DashBoardWidget widget) {
+    public void init(DashBoardWidget widget, User user) {
 	Note note = widget.getStateObject();
 	if (note == null) {
 	    note = new Note();
@@ -28,7 +29,7 @@ public class NoteWidget extends WidgetController {
     }
 
     @Override
-    public void kill(DashBoardWidget widget) {
+    public void kill(DashBoardWidget widget, User user) {
 	Note note = widget.getStateObject();
 	note.delete();
     }

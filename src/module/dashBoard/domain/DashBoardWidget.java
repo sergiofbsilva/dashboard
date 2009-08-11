@@ -3,6 +3,8 @@ package module.dashBoard.domain;
 import java.util.Comparator;
 
 import module.dashBoard.widgets.WidgetController;
+import myorg.applicationTier.Authenticate.UserView;
+import myorg.domain.User;
 import myorg.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.DomainObject;
@@ -26,7 +28,7 @@ public class DashBoardWidget extends DashBoardWidget_Base {
 	super();
 	setDashBoardController(DashBoardController.getInstance());
 	setWidgetClassName(widgetClass.getName());
-	getWidgetController().init(this);
+	getWidgetController().init(this, UserView.getCurrentUser());
 	setOrderInColumn(0);
     }
 
@@ -43,7 +45,7 @@ public class DashBoardWidget extends DashBoardWidget_Base {
     private synchronized void initializeWidget() {
 	try {
 	    instance = (WidgetController) Class.forName(getWidgetClassName()).newInstance();
-	    instance.init(this);
+	    instance.init(this, UserView.getCurrentUser());
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
@@ -59,7 +61,7 @@ public class DashBoardWidget extends DashBoardWidget_Base {
 	}
 	removeDashBoardColumn();
 	removeDashBoardController();
-	getWidgetController().kill(this);
+	getWidgetController().kill(this, UserView.getCurrentUser());
 	Transaction.deleteObject(this);
     }
 
@@ -85,6 +87,10 @@ public class DashBoardWidget extends DashBoardWidget_Base {
 
     public DashBoardPanel getDashBoardPanel() {
 	return getDashBoardColumn().getDashBoardPanel();
+    }
+
+    public boolean isAccessibleToUser(User user) {
+	return getDashBoardPanel().isAccessibleToUser(user);
     }
 
     @Service

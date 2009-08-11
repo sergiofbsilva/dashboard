@@ -3,6 +3,7 @@ package module.dashBoard.widgets;
 import module.dashBoard.WidgetRequest;
 import module.dashBoard.domain.DashBoardWidget;
 import module.dashBoard.presentationTier.DashBoardManagementAction;
+import myorg.domain.User;
 
 import org.apache.struts.action.ActionForward;
 
@@ -13,9 +14,11 @@ public abstract class WidgetController {
      * controller is initiated and it can be used for example to store something
      * in the StateObject.
      * 
-     * @param widget
+     * 
+     * @param widget The widget that will store this WidgetController
+     * @param user The user that is creating the widget
      */
-    public void init(DashBoardWidget widget) {
+    public void init(DashBoardWidget widget, User user) {
 
     }
 
@@ -24,9 +27,10 @@ public abstract class WidgetController {
      * controller is killed this is used for example to also delete the
      * StateObject
      * 
-     * @param widget
+     * @param widget The widget that is being deleted
+     * @param user The user that is deleting the widget
      */
-    public void kill(DashBoardWidget widget) {
+    public void kill(DashBoardWidget widget, User user) {
 
     }
 
@@ -34,7 +38,7 @@ public abstract class WidgetController {
      * This method is called when there is a request to view a widget in the
      * DashBoardPanel
      * 
-     * @param request
+     * @param request 
      */
 
     public abstract void doView(WidgetRequest request);
@@ -82,7 +86,6 @@ public abstract class WidgetController {
      * This allows the DashBoardPanel to know if the edit icon (and it's
      * functionality) should be rendered in the DashBoardWidget or not.
      * 
-     * @param request
      */
     public boolean isEditionModeSupported() {
 	return false;
@@ -92,7 +95,6 @@ public abstract class WidgetController {
      * This allows the DashBoardPanel to know if the help icon (and it's
      * functionality) should be rendered in the DashBoardWidget or not.
      * 
-     * @param request
      */
     public boolean isHelpModeSupported() {
 	return false;
@@ -101,7 +103,6 @@ public abstract class WidgetController {
     /**
      * This contains the help text that will be used when helpMode is supported
      * 
-     * @param request
      */
     public String getHelp() {
 	return null;
@@ -111,7 +112,6 @@ public abstract class WidgetController {
      * This allows the DashBoardPanel to know if the close icon (and it's
      * functionality) should be rendered in the DashBoardWidget or not.
      * 
-     * @param request
      */
     public boolean isClosable() {
 	return true;
