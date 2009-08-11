@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
 
-<h2> Adicionar ao DashBoard </h2>
+<h2> <bean:message key="title.addWidget" bundle="DASH_BOARD_RESOURCES"/></h2>
 
 <ul>
 	<li>
