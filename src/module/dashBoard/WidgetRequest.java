@@ -9,6 +9,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.DomainObject;
 
 import module.dashBoard.domain.DashBoardPanel;
+import module.dashBoard.domain.DashBoardWidget;
 import myorg.domain.User;
 
 public class WidgetRequest {
@@ -16,61 +17,42 @@ public class WidgetRequest {
     private HttpServletRequest request;
     private HttpServletResponse response;
 
-    private DashBoardPanel panel;
     private User currentUser;
-    private DomainObject stateObject;
+    private DashBoardWidget widget;
 
-    public WidgetRequest(HttpServletRequest request, HttpServletResponse response, DashBoardPanel panel, User user,
-	    DomainObject objectState) {
+    public WidgetRequest(HttpServletRequest request, HttpServletResponse response, DashBoardWidget widget, User user) {
 	this.request = request;
 	this.response = response;
-	this.panel = panel;
 	this.currentUser = user;
-	this.stateObject = objectState;
+	this.widget = widget;
     }
 
     public DomainObject getStateObject() {
-	return stateObject;
-    }
-
-    public void setStateObject(DomainObject objectState) {
-	this.stateObject = objectState;
+	return this.widget.getStateObject();
     }
 
     public User getCurrentUser() {
 	return currentUser;
     }
 
-    public void setCurrentUser(User currentUser) {
-	this.currentUser = currentUser;
-    }
-
     public HttpServletRequest getRequest() {
 	return request;
-    }
-
-    public void setRequest(HttpServletRequest request) {
-	this.request = request;
     }
 
     public HttpServletResponse getResponse() {
 	return response;
     }
 
-    public void setResponse(HttpServletResponse response) {
-	this.response = response;
-    }
-
     public DashBoardPanel getPanel() {
-	return panel;
-    }
-
-    public void setPanel(DashBoardPanel panel) {
-	this.panel = panel;
+	return this.widget.getDashBoardPanel();
     }
 
     public void setAttribute(String name, Object object) {
 	request.setAttribute(name, object);
+    }
+
+    public DashBoardWidget getWidget() {
+	return widget;
     }
 
     public <T extends Object> T getRenderedObject(final String id) {

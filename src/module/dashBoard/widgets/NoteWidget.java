@@ -36,8 +36,8 @@ public class NoteWidget extends WidgetController {
 
     @Override
     public void doView(WidgetRequest request) {
-	DomainObject objectState = request.getStateObject();
-	request.setAttribute("note-" + objectState.getExternalId(), objectState);
+	DashBoardWidget widget = request.getWidget();
+	request.setAttribute("note-" + widget.getExternalId(), widget.getStateObject());
 
     }
 
@@ -48,8 +48,8 @@ public class NoteWidget extends WidgetController {
 
     @Override
     public void doEdit(WidgetRequest request) {
-	DomainObject objectState = request.getStateObject();
-	request.setAttribute("edit-note-" + objectState.getExternalId(), objectState);
+	DashBoardWidget widget = request.getWidget();
+	request.setAttribute("edit-note-" + widget.getExternalId(), widget.getStateObject());
     }
 
     @Override
