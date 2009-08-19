@@ -1,13 +1,12 @@
 package module.dashBoard.domain;
 
 import module.dashBoard.WidgetRegister;
-import module.dashBoard.widgets.EasyAccessWidget;
 import module.dashBoard.widgets.NoteWidget;
-import module.dashBoard.widgets.TestWidget;
+import myorg.domain.ModuleInitializer;
 import myorg.domain.MyOrg;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DashBoardController extends DashBoardController_Base {
+public class DashBoardController extends DashBoardController_Base implements ModuleInitializer {
 
     private static boolean isInitialized = false;
 
@@ -41,7 +40,6 @@ public class DashBoardController extends DashBoardController_Base {
 		init = new ThreadLocal<DashBoardController>();
 		init.set(myOrg.getDashBoardController());
 
-		registerKnownWidgets();
 		isInitialized = true;
 	    } finally {
 		init = null;
@@ -49,9 +47,8 @@ public class DashBoardController extends DashBoardController_Base {
 	}
     }
 
-    private static void registerKnownWidgets() {
-	WidgetRegister.registerWidget(TestWidget.class);
-	WidgetRegister.registerWidget(EasyAccessWidget.class);
+    @Override
+    public void init(MyOrg root) {
 	WidgetRegister.registerWidget(NoteWidget.class);
     }
 

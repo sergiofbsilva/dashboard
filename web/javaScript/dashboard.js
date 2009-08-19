@@ -20,6 +20,7 @@ function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, remov
 	$(function() {
 	$(".column").sortable({
 			connectWith: '.column',
+			opacity: 0.9,
 			stop: function(event, ui) {
 
 				var modification = "";
@@ -61,7 +62,8 @@ function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, remov
 						 	    { dashBoardWidgetId: widget.attr('id') },
 						    	function(data) { 
 									if(data['status'] == 'OK') {
-							 	   		widget.fadeOut(); 
+							 	   		 widget.fadeOut();  
+							 	   		/* widget.children(".portlet-content").slideUp("slow", function callback() { widget.fadeOut(); }); */
 						 	    	} else {
 						 	    		$("#dashBoardMessageContainer").empty();
 										$("#dashBoardMessageContainer").append('<div class="errorBox">' + errorMessage + '</div>');

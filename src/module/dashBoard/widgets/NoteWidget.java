@@ -6,18 +6,12 @@ import module.dashBoard.presentationTier.DashBoardManagementAction;
 import module.dashBoard.presentationTier.WidgetRequest;
 import myorg.domain.User;
 import myorg.util.BundleUtil;
-import myorg.util.ClassNameResolver;
+import myorg.util.ClassNameBundle;
 
 import org.apache.struts.action.ActionForward;
 
-import pt.ist.fenixframework.DomainObject;
-
+@ClassNameBundle(bundle="resources/DashBoardResources", key="widget.title.NoteWidget")
 public class NoteWidget extends WidgetController {
-
-    static {
-	ClassNameResolver.registerType(NoteWidget.class, "resources/DashBoardResources", "widget.title."
-		+ NoteWidget.class.getSimpleName());
-    }
 
     @Override
     public void init(DashBoardWidget widget, User user) {
