@@ -19,6 +19,7 @@
 function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, removeTitle, orderURL,closeURL,helpURL, errorMessage) {
 	$(function() {
 	$(".column").sortable({
+			cursor: 'move',
 			connectWith: '.column',
 			opacity: 0.9,
 			stop: function(event, ui) {
