@@ -61,7 +61,7 @@ startDashBoard(<%= numberOfColumns %>,
 				<bean:define id="widget" name="widget" toScope="request" type="module.dashBoard.domain.DashBoardWidget"/>
 				<bean:define id="widgetId" name="widget" property="externalId" type="java.lang.String" />
 				<div id="<%= widgetId %>" class="portlet">
-					<div class="portlet-header">
+					<div class="portlet-header" style="cursor: move;">
 						<logic:equal name="widget" property="closable" value="true">
 							<span class="ui-icon ui-icon-close"></span>
 						</logic:equal>
