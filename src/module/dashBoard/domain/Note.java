@@ -11,7 +11,7 @@ public class Note extends Note_Base {
 
     public void delete() {
 	removeDashBoardController();
-	Transaction.deleteObject(this);
+	deleteDomainObject();
     }
 
 }

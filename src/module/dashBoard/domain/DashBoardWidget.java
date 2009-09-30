@@ -62,7 +62,7 @@ public class DashBoardWidget extends DashBoardWidget_Base {
 	removeDashBoardColumn();
 	removeDashBoardController();
 	getWidgetController().kill(this, UserView.getCurrentUser());
-	Transaction.deleteObject(this);
+	deleteDomainObject();
     }
 
     public <T extends DomainObject> T getStateObject() {
