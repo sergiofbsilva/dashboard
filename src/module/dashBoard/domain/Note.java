@@ -1,6 +1,5 @@
 package module.dashBoard.domain;
 
-import pt.ist.fenixframework.pstm.Transaction;
 
 public class Note extends Note_Base {
 

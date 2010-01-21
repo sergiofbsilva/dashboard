@@ -2,15 +2,12 @@ package module.dashBoard.widgets;
 
 import module.dashBoard.domain.DashBoardWidget;
 import module.dashBoard.domain.Note;
-import module.dashBoard.presentationTier.DashBoardManagementAction;
 import module.dashBoard.presentationTier.WidgetRequest;
 import myorg.domain.User;
 import myorg.util.BundleUtil;
 import myorg.util.ClassNameBundle;
 
-import org.apache.struts.action.ActionForward;
-
-@ClassNameBundle(bundle="resources/DashBoardResources", key="widget.title.NoteWidget")
+@ClassNameBundle(bundle = "resources/DashBoardResources", key = "widget.title.NoteWidget")
 public class NoteWidget extends WidgetController {
 
     @Override
@@ -44,11 +41,6 @@ public class NoteWidget extends WidgetController {
     public void doEdit(WidgetRequest request) {
 	DashBoardWidget widget = request.getWidget();
 	request.setAttribute("edit-note-" + widget.getExternalId(), widget.getStateObject());
-    }
-
-    @Override
-    public ActionForward doSubmit(WidgetRequest request) {
-	return DashBoardManagementAction.forwardToDashBoard(request);
     }
 
     @Override

@@ -1,11 +1,14 @@
 package module.dashBoard;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import module.dashBoard.domain.DashBoardPanel;
 import module.dashBoard.widgets.WidgetController;
 import myorg.domain.User;
+import myorg.util.BundleUtil;
 
 public class WidgetRegister {
 
@@ -18,10 +21,21 @@ public class WidgetRegister {
 
     };
 
+    public static Comparator<Class<? extends WidgetController>> WIDGET_NAME_COMPARATOR = new Comparator<Class<? extends WidgetController>>() {
+
+	@Override
+	public int compare(Class<? extends WidgetController> o1, Class<? extends WidgetController> o2) {
+	    return BundleUtil.getLocalizedNamedFroClass(o1).compareTo(BundleUtil.getLocalizedNamedFroClass(o2));
+	}
+
+    };
+
     private static Set<WidgetControllerHolder> availableWidgets = new HashSet<WidgetControllerHolder>();
 
     public static Set<Class<? extends WidgetController>> getAvailableWidgets(DashBoardPanel panel, User userAdding) {
-	Set<Class<? extends WidgetController>> widgetControllers = new HashSet<Class<? extends WidgetController>>();
+
+	Set<Class<? extends WidgetController>> widgetControllers = new TreeSet<Class<? extends WidgetController>>(
+		WIDGET_NAME_COMPARATOR);
 	for (WidgetControllerHolder holder : availableWidgets) {
 	    if (holder.canBeAdded(panel, userAdding)) {
 		widgetControllers.add(holder.getController());
@@ -43,8 +57,8 @@ public class WidgetRegister {
     }
 
     private static class WidgetControllerHolder {
-	private Class<? extends WidgetController> controller;
-	private WidgetAditionPredicate predicate;
+	private final Class<? extends WidgetController> controller;
+	private final WidgetAditionPredicate predicate;
 
 	public WidgetControllerHolder(Class<? extends WidgetController> controller, WidgetAditionPredicate predicate) {
 	    this.controller = controller;

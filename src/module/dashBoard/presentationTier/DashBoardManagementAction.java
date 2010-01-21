@@ -9,10 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import module.dashBoard.WidgetRegister;
 import module.dashBoard.domain.DashBoardColumnBean;
-import module.dashBoard.domain.DashBoardController;
 import module.dashBoard.domain.DashBoardPanel;
 import module.dashBoard.domain.DashBoardWidget;
-import module.dashBoard.domain.UserDashBoardPanel;
 import module.dashBoard.widgets.WidgetController;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
@@ -29,7 +27,6 @@ import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumF
 import pt.ist.fenixWebFramework.servlets.json.JsonObject;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Mapping(path = "/dashBoardManagement")
 public class DashBoardManagementAction extends ContextBaseAction {
@@ -200,12 +197,12 @@ public class DashBoardManagementAction extends ContextBaseAction {
 
     @Service
     private DashBoardPanel Test() {
-	List<DashBoardPanel> panels = DashBoardController.getInstance().getPanels();
-	if (!panels.isEmpty()) {
-	    return panels.get(0);
-	}
 
-	DashBoardPanel panel = new UserDashBoardPanel(new MultiLanguageString("DashBoard"), UserView.getCurrentUser());
-	return panel;
+	User user = UserView.getCurrentUser();
+	if (!user.getUserDashBoards().isEmpty()) {
+	    return user.getUserDashBoards().get(0);
+	} else {
+	    throw new RuntimeException("No DashBoard Panel Found!");
+	}
     }
 }

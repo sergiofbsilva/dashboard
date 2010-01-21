@@ -5,6 +5,10 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class UserDashBoardPanel extends UserDashBoardPanel_Base {
 
+    protected UserDashBoardPanel() {
+	super();
+    }
+
     public UserDashBoardPanel(MultiLanguageString name, User user) {
 	super();
 	setName(name);
