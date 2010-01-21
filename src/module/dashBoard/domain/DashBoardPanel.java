@@ -1,5 +1,6 @@
 package module.dashBoard.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -74,5 +75,17 @@ public abstract class DashBoardPanel extends DashBoardPanel_Base {
 	}
 
 	return widgets;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends DashBoardPanel> List<T> getPanelsForUser(User user, Class<T> panelClass) {
+	List<T> panels = new ArrayList<T>();
+	for (DashBoardPanel panel : user.getUserDashBoards()) {
+	    if (panelClass.isAssignableFrom(panel.getClass())) {
+		panels.add((T) panel);
+	    }
+	}
+
+	return panels;
     }
 }
