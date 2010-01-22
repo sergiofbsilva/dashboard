@@ -4,24 +4,24 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<bean:define id="dashBoardId" name="dashBoard" property="externalId"/>
+<bean:define id="dashBoardId" name="widget" property="dashBoardPanel.externalId"/>
 <bean:define id="widgetId" name="widget" property="externalId"/>
 
 <bean:define id="noteEdit" value="<%= "edit-note-" + widgetId %>" type="java.lang.String" toScope="page"/>
 <bean:define id="noteView" value="<%= "note-" + widgetId %>" type="java.lang.String" toScope="page"/>
 
 <logic:present name="<%= noteEdit %>" scope="request">
-	<fr:form action="<%= "/dashBoardManagement.do?method=widgetSubmition&dashBoardId=" + dashBoardId + "&dashBoardWidgetId=" + widgetId%>">
-		<fr:edit id="<%= noteView %>"  name="<%= noteView %>" slot="text" type="java.lang.String">
-			<fr:layout name="longText">
-				<fr:property name="columns" value="30"/>
-				<fr:property name="rows" value="10"/>
-			</fr:layout>
-		</fr:edit>
-		<p>
-			<html:submit styleClass="inputbutton">Guardar</html:submit>
-		</p>
-	</fr:form>
+		<fr:form action="<%= "/dashBoardManagement.do?method=widgetSubmition&dashBoardId=" + dashBoardId + "&dashBoardWidgetId=" + widgetId%>">
+			<fr:edit id="<%= noteView %>"  name="<%= noteEdit %>" slot="text" type="java.lang.String" scope="request">
+				<fr:layout name="longText">
+					<fr:property name="columns" value="30"/>
+					<fr:property name="rows" value="10"/>
+				</fr:layout>
+			</fr:edit>
+			<p>
+				<html:submit styleClass="inputbutton">Guardar</html:submit>
+			</p>
+		</fr:form>
 </logic:present>
 
 <logic:notPresent name="<%= noteEdit %>">

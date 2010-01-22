@@ -43,7 +43,10 @@ startDashBoard(<%= numberOfColumns %>,
 				   '<%= request.getContextPath() + "/dashBoardManagement.do?method=order&dashBoardId="+ dashBoardId %>',
 				   '<%= request.getContextPath() + "/dashBoardManagement.do?method=removeWidgetFromColumn" %>',
 				   '<%= request.getContextPath() + "/dashBoardManagement.do?method=requestWidgetHelp" %>',
-				   '<bean:message key="error.removeWidget" bundle="DASH_BOARD_RESOURCES"/>');
+				   '<%= request.getContextPath() + "/dashBoardManagement.do?method=viewWidget" %>',
+				   '<%= request.getContextPath() + "/dashBoardManagement.do?method=editWidget" %>',
+				   '<bean:message key="error.removeWidget" bundle="DASH_BOARD_RESOURCES"/>',
+				   '<bean:message key="error.loadingWidget" bundle="DASH_BOARD_RESOURCES"/>');
 </script>
 
 <div id="dashBoardMessageContainer">
@@ -76,7 +79,13 @@ startDashBoard(<%= numberOfColumns %>,
 						<span class="widgetName"><fr:view name="widget" property="widgetController.class" layout="name-resolver"/></span>
 					</div>
 					<div class="portlet-content">
-						<jsp:include page="<%= WidgetBodyResolver.getBodyFor(widget.getWidgetController().getClass()) %>" flush="false"/>
+						<bean:define id="theme" name="virtualHost" property="theme.name"/>
+						<div style="text-align: center">
+							<bean:message key="label.widget.loading" bundle="DASH_BOARD_RESOURCES"/>
+						</div>
+						<div style="background-image: url(<%= request.getContextPath() + "/CSS/" + theme + "/images/autocomplete.gif"%>); background-position: center; background-repeat: no-repeat">
+							&nbsp;
+						</div>
 					</div>
 				</div>
 			</logic:iterate>

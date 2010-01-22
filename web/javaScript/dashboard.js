@@ -14,9 +14,16 @@
  * @param orderURL: The url for the ordering
  * @param closeURL: The url for closing the widget
  * @param helpURL: The url for showing the help
- * @param errorMessage: The message that is displayed when widget deletion AJAX request failed
+ * @param viewUrl: the url that will call the widget doView binding
+ * @param editURL: the url that will call the widget doEdit binding
+ * @param removeErrorMessage: The message that is displayed when widget deletion AJAX request failed
+ * @param loadError: The message that is displayed if a widget ajax request had some kind of error (might have been error server side, timeout, etc)
  */
-function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, removeTitle, orderURL,closeURL,helpURL, errorMessage) {
+var globalLoadViewWidget; // we need this because loadViewWidgetBody() should only received the widgetContent and be able to reload it
+
+function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, removeTitle, orderURL,closeURL,helpURL, viewURL, editURL, removeErrorMessage, loadError) {
+	globalLoadViewWidget = viewURL;
+	
 	$(function() {
 	$(".column").sortable({
 			handle: '.portlet-header',
@@ -68,7 +75,7 @@ function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, remov
 							 	   		/* widget.children(".portlet-content").slideUp("slow", function callback() { widget.fadeOut(); }); */
 						 	    	} else {
 						 	    		$("#dashBoardMessageContainer").empty();
-										$("#dashBoardMessageContainer").append('<div class="errorBox">' + errorMessage + '</div>');
+										$("#dashBoardMessageContainer").append('<div class="errorBox">' + removeErrorMessage + '</div>');
 						 	    	}});
 						 			
 			      }
@@ -77,10 +84,30 @@ function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, remov
 		});
 				
 		$(".portlet-header .ui-icon-pencil").click(function() {
-			var form = $(this).nextAll("form.edit");
-			form.submit();
+			var widgetContent = $(this).parent().next();
+			var widgetId =  $(widgetContent).parent().attr('id')
+			
+			$.ajax({ 
+                url: editURL, 
+                data: { dashBoardWidgetId: widgetId, timeout: 6000 },
+                success: function(data) { 
+    					if (data)
+    					{
+    						$(widgetContent).empty();
+    						$(widgetContent).append(data);
+    						$(widgetContent).children('form').ajaxForm(function() { 
+    							 loadViewWidgetBody($(widgetContent));      
+    						 }); 
+    					}
+				}, 
+				error: function (XMLHttpRequest, textStatus, errorThrown) { 
+					$(widgetContent).empty();
+					$(widgetContent).append('<div class="errorBox">' + loadError + '</div>');
+				} 
+		
+			});
 		});
-
+		
 		$(".portlet-header .ui-icon-help").click(function() {
 			var widget = $(this).parent().parent();
 			$.getJSON(helpURL,
@@ -96,10 +123,37 @@ function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, remov
 				 	    );
 		});
 
-		$(".column").disableSelection();	
+		$(".portlet-content").each( function(index, widgetContent) {
+			loadViewWidgetBody(widgetContent);
+		});
+   
+		$(".column").disableSelection();
+		
+		
 	});
 }
 
+function loadViewWidgetBody(widgetContent) {
+	widgetId =  $(widgetContent).parent().attr('id')
+	
+	$.ajax({ 
+        url: globalLoadViewWidget, 
+        data: { dashBoardWidgetId: widgetId },
+        success: function(data) { 
+				if (data)
+				{
+					$(widgetContent).empty();
+					$(widgetContent).append(data);
+				}
+		}, 
+		error: function (XMLHttpRequest, textStatus, errorThrown) { 
+			$(widgetContent).empty();
+			$(widgetContent).append('<div class="errorBox">' + loadError + '</div>');
+		} 
+
+	});
+
+}
 function getWidgetName(widget) {
 	return widget.children(".portlet-header").children(".widgetName").text();
 }

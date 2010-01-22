@@ -11,9 +11,12 @@ import module.dashBoard.WidgetRegister;
 import module.dashBoard.domain.DashBoardColumnBean;
 import module.dashBoard.domain.DashBoardPanel;
 import module.dashBoard.domain.DashBoardWidget;
+import module.dashBoard.domain.UserDashBoardPanel;
 import module.dashBoard.widgets.WidgetController;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
+import myorg.presentationTier.Context;
+import myorg.presentationTier.LayoutContext;
 import myorg.presentationTier.actions.ContextBaseAction;
 
 import org.apache.struts.action.ActionForm;
@@ -37,8 +40,12 @@ public class DashBoardManagementAction extends ContextBaseAction {
 		return !(httpServletRequest.getRequestURI().endsWith("/dashBoardManagement.do")
 			&& httpServletRequest.getQueryString() != null && (httpServletRequest.getQueryString().contains(
 			"method=order")
-			|| httpServletRequest.getQueryString().contains("method=requestWidgetHelp") || httpServletRequest
-			.getQueryString().contains("method=removeWidgetFromColumn")));
+			|| httpServletRequest.getQueryString().contains("method=requestWidgetHelp")
+			|| httpServletRequest.getQueryString().contains("method=removeWidgetFromColumn")
+			|| httpServletRequest.getQueryString().contains("method=viewWidget") || httpServletRequest
+			.getQueryString().contains("method=editWidget")
+
+		));
 	    }
 	});
     }
@@ -89,15 +96,47 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	return forward;
     }
 
+    public ActionForward viewWidget(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
+	UserDashBoardPanel panel = (UserDashBoardPanel) widget.getDashBoardPanel();
+	User currentUser = UserView.getCurrentUser();
+
+	if (panel.getUser() != currentUser) {
+	    throw new RuntimeException("go take a hike!");
+	}
+
+	WidgetRequest widgetRequest = new WidgetRequest(request, response, widget, currentUser);
+	widget.getWidgetController().doView(widgetRequest);
+
+	request.setAttribute("widget", widget);
+	LayoutContext context = (LayoutContext) getContext(request);
+	context.setLayout(WidgetBodyResolver.getBodyFor(widget.getWidgetController().getClass()));
+	return context.forward("");
+    }
+
+    public ActionForward editWidget(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
+	UserDashBoardPanel panel = (UserDashBoardPanel) widget.getDashBoardPanel();
+	User currentUser = UserView.getCurrentUser();
+
+	if (panel.getUser() != currentUser) {
+	    throw new RuntimeException("go take a hike!");
+	}
+
+	WidgetRequest widgetRequest = new WidgetRequest(request, response, widget, currentUser);
+	widget.getWidgetController().doEdit(widgetRequest);
+
+	request.setAttribute("widget", widget);
+	LayoutContext context = (LayoutContext) getContext(request);
+	context.setLayout(WidgetBodyResolver.getBodyFor(widget.getWidgetController().getClass()));
+	return context.forward("");
+    }
+
     public ActionForward viewDashBoardPanel(final DashBoardPanel panel, final HttpServletRequest request,
 	    final HttpServletResponse response) {
 	request.setAttribute("dashBoard", panel);
-	User currentUser = UserView.getCurrentUser();
-
-	for (DashBoardWidget widget : panel.getWidgetsSet()) {
-	    WidgetRequest widgetRequest = new WidgetRequest(request, response, widget, currentUser);
-	    widget.getWidgetController().doView(widgetRequest);
-	}
 	return forward(request, "/dashBoardPanel/viewDashBoard.jsp");
     }
 
