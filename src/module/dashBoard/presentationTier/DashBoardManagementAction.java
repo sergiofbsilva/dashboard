@@ -110,9 +110,8 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	widget.getWidgetController().doView(widgetRequest);
 
 	request.setAttribute("widget", widget);
-	LayoutContext context = (LayoutContext) getContext(request);
-	context.setLayout(WidgetBodyResolver.getBodyFor(widget.getWidgetController().getClass()));
-	return context.forward("");
+	WidgetLayoutContext context = new WidgetLayoutContext(widget);
+	return context.forward();
     }
 
     public ActionForward editWidget(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
@@ -129,9 +128,8 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	widget.getWidgetController().doEdit(widgetRequest);
 
 	request.setAttribute("widget", widget);
-	LayoutContext context = (LayoutContext) getContext(request);
-	context.setLayout(WidgetBodyResolver.getBodyFor(widget.getWidgetController().getClass()));
-	return context.forward("");
+	WidgetLayoutContext context = new WidgetLayoutContext(widget);
+	return context.forward();
     }
 
     public ActionForward viewDashBoardPanel(final DashBoardPanel panel, final HttpServletRequest request,
