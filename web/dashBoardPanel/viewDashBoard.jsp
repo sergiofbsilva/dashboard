@@ -83,9 +83,9 @@ startDashBoard(<%= numberOfColumns %>,
 						<div style="text-align: center">
 							<bean:message key="label.widget.loading" bundle="DASH_BOARD_RESOURCES"/>
 						</div>
-						<div style="background-image: url(<%= request.getContextPath() + "/CSS/" + theme + "/images/autocomplete.gif"%>); background-position: center; background-repeat: no-repeat">
+					 	<div style="background-image: url(<%= request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() +  request.getContextPath() + "/CSS/" + theme + "/images/autocomplete.gif"%>); background-position: center; background-repeat: no-repeat">
 							&nbsp;
-						</div>
+						</div> 
 					</div>
 				</div>
 			</logic:iterate>
