@@ -109,6 +109,9 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	WidgetRequest widgetRequest = new WidgetRequest(request, response, widget, currentUser);
 	widget.getWidgetController().doView(widgetRequest);
 
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Pragma", "no-cache");
+	response.setDateHeader("Expires", 0);
 	request.setAttribute("widget", widget);
 	WidgetLayoutContext context = new WidgetLayoutContext(widget);
 	return context.forward();
@@ -127,6 +130,9 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	WidgetRequest widgetRequest = new WidgetRequest(request, response, widget, currentUser);
 	widget.getWidgetController().doEdit(widgetRequest);
 
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Pragma", "no-cache");
+	response.setDateHeader("Expires", 0);
 	request.setAttribute("widget", widget);
 	WidgetLayoutContext context = new WidgetLayoutContext(widget);
 	return context.forward();
