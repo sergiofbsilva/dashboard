@@ -51,6 +51,10 @@ public class WidgetRequest {
 	request.setAttribute(name, object);
     }
 
+    public String getContextPath() {
+	return request.getContextPath();
+    }
+
     public DashBoardWidget getWidget() {
 	return widget;
     }
