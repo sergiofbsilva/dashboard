@@ -15,10 +15,10 @@ import module.dashBoard.domain.UserDashBoardPanel;
 import module.dashBoard.widgets.WidgetController;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
-import myorg.presentationTier.Context;
-import myorg.presentationTier.LayoutContext;
 import myorg.presentationTier.actions.ContextBaseAction;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -33,6 +33,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/dashBoardManagement")
 public class DashBoardManagementAction extends ContextBaseAction {
+
+    private static Logger logger = Logger.getLogger(DashBoardManagementAction.class.getName());
 
     static {
 	RequestChecksumFilter.registerFilterRule(new ChecksumPredicate() {
@@ -103,7 +105,11 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	User currentUser = UserView.getCurrentUser();
 
 	if (panel.getUser() != currentUser) {
-	    throw new RuntimeException("go take a hike!");
+	    if (logger.isEnabledFor(Priority.WARN)) {
+		logger.warn("Current user (" + (currentUser != null ? currentUser.getUsername() : "null")
+			+ ") is not the owner of the Panel (" + panel.getUser().getUsername() + ")");
+	    }
+	    return null;
 	}
 
 	WidgetRequest widgetRequest = new WidgetRequest(request, response, widget, currentUser);
@@ -124,7 +130,11 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	User currentUser = UserView.getCurrentUser();
 
 	if (panel.getUser() != currentUser) {
-	    throw new RuntimeException("go take a hike!");
+	    if (logger.isEnabledFor(Priority.WARN)) {
+		logger.warn("Current user (" + (currentUser != null ? currentUser.getUsername() : "null")
+			+ ") is not the owner of the Panel (" + panel.getUser().getUsername() + ")");
+	    }
+	    return null;
 	}
 
 	WidgetRequest widgetRequest = new WidgetRequest(request, response, widget, currentUser);
