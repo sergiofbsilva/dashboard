@@ -20,9 +20,11 @@
  * @param loadError: The message that is displayed if a widget ajax request had some kind of error (might have been error server side, timeout, etc)
  */
 var globalLoadViewWidget; // we need this because loadViewWidgetBody() should only received the widgetContent and be able to reload it
+var globalLoadError;
 
 function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, removeTitle, orderURL,closeURL,helpURL, viewURL, editURL, removeErrorMessage, loadError) {
 	globalLoadViewWidget = viewURL;
+	globalLoadError = loadError;
 	
 	$(function() {
 	$(".column").sortable({
@@ -134,21 +136,26 @@ function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, remov
 }
 
 function loadViewWidgetBody(widgetContent) {
-	widgetId =  $(widgetContent).parent().attr('id')
 	
+	var widgetId =  $(widgetContent).parent().attr('id')
+
 	$.ajax({ 
         url: globalLoadViewWidget, 
         data: { dashBoardWidgetId: widgetId },
         success: function(data) { 
-				if (data)
-				{
-					$(widgetContent).empty();
+        		if (data.length > 0) {
+        			$(widgetContent).empty();
 					$(widgetContent).append(data);
-				}
+					
+        		}
+        		else {
+        			$(widgetContent).empty();
+        			$(widgetContent).append('<div class="errorBox">' + globalLoadError + '</div>');
+        		}
 		}, 
 		error: function (XMLHttpRequest, textStatus, errorThrown) { 
 			$(widgetContent).empty();
-			$(widgetContent).append('<div class="errorBox">' + loadError + '</div>');
+			$(widgetContent).append('<div class="errorBox">' + globalLoadError + '</div>');
 		} 
 
 	});
