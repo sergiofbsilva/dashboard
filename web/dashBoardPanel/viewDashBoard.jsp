@@ -67,16 +67,16 @@ startDashBoard(<%= numberOfColumns %>,
 				<div id="<%= widgetId %>" class="portlet">
 					<div class="portlet-header" style="cursor: move;">
 						<logic:equal name="widget" property="closable" value="true">
-							<span class="ui-icon ui-icon-close"></span>
+							<span class="ui-icon ui-icon-close" title="<bean:message key="icon.title.close" bundle="DASH_BOARD_RESOURCES"/>"></span>
 						</logic:equal>
 						<logic:equal name="widget" property="optionsModeSupported" value="true">
-							<span class="ui-icon ui-icon-gear"></span>
+							<span class="ui-icon ui-icon-wrench" title="<bean:message key="icon.title.options" bundle="DASH_BOARD_RESOURCES"/>"></span>
 						</logic:equal>
 						<logic:equal name="widget" property="editionModeSupported" value="true">
-							<span class="ui-icon ui-icon-pencil"></span>
+							<span class="ui-icon ui-icon-pencil" title="<bean:message key="icon.title.edit" bundle="DASH_BOARD_RESOURCES"/>"></span>
 						</logic:equal>
 						<logic:equal name="widget" property="helpModeSupported" value="true">
-							<span class="ui-icon ui-icon-help"></span>
+							<span class="ui-icon ui-icon-help" title="<bean:message key="icon.title.help" bundle="DASH_BOARD_RESOURCES"/>"></span>
 						</logic:equal>
 						<span class="widgetName"><fr:view name="widget" property="widgetController.class" layout="name-resolver"/></span>
 					</div>

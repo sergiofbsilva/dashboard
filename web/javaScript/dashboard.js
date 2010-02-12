@@ -90,7 +90,7 @@ function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, remov
 			widgetCall(editURL, $(this).parent().next());
 		});
 				
-		$(".portlet-header .ui-icon-gear").click(function () {
+		$(".portlet-header .ui-icon-wrench").click(function () {
 			widgetCall(optionsURL, $(this).parent().next());
 		});
 		
