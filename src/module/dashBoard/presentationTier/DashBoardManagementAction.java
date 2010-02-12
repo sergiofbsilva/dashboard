@@ -44,10 +44,9 @@ public class DashBoardManagementAction extends ContextBaseAction {
 			"method=order")
 			|| httpServletRequest.getQueryString().contains("method=requestWidgetHelp")
 			|| httpServletRequest.getQueryString().contains("method=removeWidgetFromColumn")
-			|| httpServletRequest.getQueryString().contains("method=viewWidget") || httpServletRequest
-			.getQueryString().contains("method=editWidget")
-
-		));
+			|| httpServletRequest.getQueryString().contains("method=viewWidget")
+			|| httpServletRequest.getQueryString().contains("method=editWidget") || httpServletRequest
+			.getQueryString().contains("method=editOptions")));
 	    }
 	});
     }
