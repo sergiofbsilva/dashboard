@@ -18,6 +18,10 @@ class DashBoardWidget {
 	String widgetClassName;
 }
 
+class WidgetOptions {
+
+}
+
 class Note {
 	String text;
 }
@@ -38,11 +42,23 @@ relation DashBoardColumnDashBoardWidget {
 	DashBoardWidget playsRole widgets {
 		multiplicity *;
 	}
-}	
+}
 
-relation DashBoardDashBoardController {
+relation DashBoardWidgetWidgetOptions {
+	DashBoardWidget playsRole widget;
+	WidgetOptions playsRole options;
+}
+
+relation DashBoardPanelDashBoardController {
 	DashBoardController playsRole dashBoardController;
 	DashBoardPanel playsRole panels {
+		multiplicity *;
+	}
+}
+
+relation DashBoardColumnDashBoardController {
+	DashBoardController playsRole dashBoardController;
+	DashBoardColumn playsRole dashBoardColumns {
 		multiplicity *;
 	}
 }
@@ -54,9 +70,9 @@ relation DashBoardWidgetDashBoardController {
 	}
 }
 
-relation DashBoardColumnDashBoardController {
+relation WidgetOptionsDashBoardController {
 	DashBoardController playsRole dashBoardController;
-	DashBoardColumn playsRole dashBoardColumns {
+	WidgetOptions playsRole widgetsOptions {
 		multiplicity *;
 	}
 }

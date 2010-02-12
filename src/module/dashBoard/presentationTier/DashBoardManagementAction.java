@@ -101,45 +101,58 @@ public class DashBoardManagementAction extends ContextBaseAction {
     public ActionForward viewWidget(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) {
 	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
-	UserDashBoardPanel panel = (UserDashBoardPanel) widget.getDashBoardPanel();
 	User currentUser = UserView.getCurrentUser();
 
-	if (panel.getUser() != currentUser) {
-	    if (logger.isEnabledFor(Priority.WARN)) {
-		logger.warn("Current user (" + (currentUser != null ? currentUser.getUsername() : "null")
-			+ ") is not the owner of the Panel (" + panel.getUser().getUsername() + ")");
-	    }
+	if (!checkPanelUser((UserDashBoardPanel) widget.getDashBoardPanel(), currentUser)) {
 	    return null;
 	}
 
-	WidgetRequest widgetRequest = new WidgetRequest(request, response, widget, currentUser);
-	widget.getWidgetController().doView(widgetRequest);
+	widget.getWidgetController().doView(new WidgetRequest(request, response, widget, currentUser));
 
-	response.setHeader("Cache-Control", "no-cache");
-	response.setHeader("Pragma", "no-cache");
-	response.setDateHeader("Expires", 0);
-	request.setAttribute("widget", widget);
-	WidgetLayoutContext context = new WidgetLayoutContext(widget);
-	return context.forward();
+	return forwardToWidget(widget, request, response);
     }
 
     public ActionForward editWidget(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) {
 	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
-	UserDashBoardPanel panel = (UserDashBoardPanel) widget.getDashBoardPanel();
 	User currentUser = UserView.getCurrentUser();
 
+	if (!checkPanelUser((UserDashBoardPanel) widget.getDashBoardPanel(), currentUser)) {
+	    return null;
+	}
+
+	widget.getWidgetController().doEdit(new WidgetRequest(request, response, widget, currentUser));
+
+	return forwardToWidget(widget, request, response);
+    }
+
+    public ActionForward editOptions(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
+	User currentUser = UserView.getCurrentUser();
+
+	if (!checkPanelUser((UserDashBoardPanel) widget.getDashBoardPanel(), currentUser)) {
+	    return null;
+	}
+
+	widget.getWidgetController().doEditOptions(new WidgetRequest(request, response, widget, currentUser));
+
+	return forwardToWidget(widget, request, response);
+    }
+
+    private static boolean checkPanelUser(UserDashBoardPanel panel, User currentUser) {
 	if (panel.getUser() != currentUser) {
 	    if (logger.isEnabledFor(Priority.WARN)) {
 		logger.warn("Current user (" + (currentUser != null ? currentUser.getUsername() : "null")
 			+ ") is not the owner of the Panel (" + panel.getUser().getUsername() + ")");
 	    }
-	    return null;
+	    return false;
 	}
+	return true;
+    }
 
-	WidgetRequest widgetRequest = new WidgetRequest(request, response, widget, currentUser);
-	widget.getWidgetController().doEdit(widgetRequest);
-
+    private static ActionForward forwardToWidget(DashBoardWidget widget, final HttpServletRequest request,
+	    final HttpServletResponse response) {
 	response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Pragma", "no-cache");
 	response.setDateHeader("Expires", 0);
@@ -208,20 +221,7 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	    final HttpServletResponse response) {
 
 	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
-	WidgetController strutsController = widget.getWidgetController();
-	return strutsController.doSubmit(new WidgetRequest(request, response, widget, UserView.getCurrentUser()));
-    }
-
-    public ActionForward requestWidgetEdit(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-	    final HttpServletResponse response) {
-
-	DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
-	DashBoardPanel panel = widget.getDashBoardPanel();
-
-	WidgetController strutsController = widget.getWidgetController();
-	strutsController.doEdit(new WidgetRequest(request, response, widget, UserView.getCurrentUser()));
-
-	return viewDashBoardPanel(panel, request, response);
+	return widget.getWidgetController().doSubmit(new WidgetRequest(request, response, widget, UserView.getCurrentUser()));
     }
 
     public ActionForward requestWidgetHelp(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,

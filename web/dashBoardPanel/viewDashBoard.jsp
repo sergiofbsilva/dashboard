@@ -45,6 +45,7 @@ startDashBoard(<%= numberOfColumns %>,
 				   '<%= request.getContextPath() + "/dashBoardManagement.do?method=requestWidgetHelp" %>',
 				   '<%= request.getContextPath() + "/dashBoardManagement.do?method=viewWidget" %>',
 				   '<%= request.getContextPath() + "/dashBoardManagement.do?method=editWidget" %>',
+				   '<%= request.getContextPath() + "/dashBoardManagement.do?method=editOptions" %>',
 				   '<bean:message key="error.removeWidget" bundle="DASH_BOARD_RESOURCES"/>',
 				   '<bean:message key="error.loadingWidget" bundle="DASH_BOARD_RESOURCES"/>');
 </script>
@@ -68,10 +69,11 @@ startDashBoard(<%= numberOfColumns %>,
 						<logic:equal name="widget" property="closable" value="true">
 							<span class="ui-icon ui-icon-close"></span>
 						</logic:equal>
+						<logic:equal name="widget" property="optionsModeSupported" value="true">
+							<span class="ui-icon ui-icon-gear"></span>
+						</logic:equal>
 						<logic:equal name="widget" property="editionModeSupported" value="true">
 							<span class="ui-icon ui-icon-pencil"></span>
-							<form class="edit" method="post" action="<%= request.getContextPath() + "/dashBoardManagement.do?method=requestWidgetEdit&dashBoardWidgetId=" + widgetId %>">
-							</form>
 						</logic:equal>
 						<logic:equal name="widget" property="helpModeSupported" value="true">
 							<span class="ui-icon ui-icon-help"></span>

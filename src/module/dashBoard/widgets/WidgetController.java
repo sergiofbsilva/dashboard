@@ -1,8 +1,10 @@
 package module.dashBoard.widgets;
 
 import org.apache.struts.action.ActionForward;
+import pt.ist.fenixWebFramework.services.Service;
 
 import module.dashBoard.domain.DashBoardWidget;
+import module.dashBoard.domain.WidgetOptions;
 import module.dashBoard.presentationTier.DashBoardManagementAction;
 import module.dashBoard.presentationTier.WidgetRequest;
 import myorg.domain.User;
@@ -14,14 +16,33 @@ public abstract class WidgetController {
      * controller is initiated and it can be used for example to store something
      * in the StateObject.
      * 
-     * 
      * @param widget
      *            The widget that will store this WidgetController
      * @param user
      *            The user that is creating the widget
      */
     public void init(DashBoardWidget widget, User user) {
+	if (isOptionsModeSupported()) {
+	    getOrCreateOptions(widget);
+	}
+    }
 
+    /**
+     * This method is called when a new DashBoardWidget is being created.
+     * Obtains and returns the WidgetOptions, if not null. Otherwise, creates
+     * the WidgetOptions, associates it with this widget and returns it.
+     * 
+     * @param widget
+     *            The widget from which to obtain or create the WidgetOptions
+     */
+    @Service
+    protected WidgetOptions getOrCreateOptions(DashBoardWidget widget) {
+	WidgetOptions options = widget.getOptions();
+	if (options == null) {
+	    options = new WidgetOptions();
+	    widget.setOptions(options);
+	}
+	return options;
     }
 
     /**
@@ -35,7 +56,9 @@ public abstract class WidgetController {
      *            The user that is deleting the widget
      */
     public void kill(DashBoardWidget widget, User user) {
-
+	if (isOptionsModeSupported()) {
+	    getOrCreateOptions(widget).delete();
+	}
     }
 
     /**
@@ -56,6 +79,18 @@ public abstract class WidgetController {
      * @param request
      */
     public void doEdit(WidgetRequest request) {
+	throw new UnsupportedOperationException();
+    }
+
+    /**
+     * This method is called when there is a request to edit the widget options
+     * in the DashBoardPanel
+     * 
+     * By default throws UnsupportedOperationException.
+     * 
+     * @param request
+     */
+    public void doEditOptions(WidgetRequest request) {
 	throw new UnsupportedOperationException();
     }
 
@@ -92,6 +127,14 @@ public abstract class WidgetController {
      * 
      */
     public boolean isEditionModeSupported() {
+	return false;
+    }
+
+    /**
+     * Indicates whether this WidgetController supports the options mode.
+     * 
+     */
+    public boolean isOptionsModeSupported() {
 	return false;
     }
 

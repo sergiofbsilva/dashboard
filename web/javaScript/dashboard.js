@@ -16,13 +16,14 @@
  * @param helpURL: The url for showing the help
  * @param viewUrl: the url that will call the widget doView binding
  * @param editURL: the url that will call the widget doEdit binding
+ * @param optionsURL: the url that will call the widget doEditOptions binding
  * @param removeErrorMessage: The message that is displayed when widget deletion AJAX request failed
  * @param loadError: The message that is displayed if a widget ajax request had some kind of error (might have been error server side, timeout, etc)
  */
 var globalLoadViewWidget; // we need this because loadViewWidgetBody() should only received the widgetContent and be able to reload it
 var globalLoadError;
 
-function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, removeTitle, orderURL,closeURL,helpURL, viewURL, editURL, removeErrorMessage, loadError) {
+function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, removeTitle, orderURL, closeURL, helpURL, viewURL, editURL, optionsURL, removeErrorMessage, loadError) {
 	globalLoadViewWidget = viewURL;
 	globalLoadError = loadError;
 	
@@ -86,28 +87,11 @@ function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, remov
 		});
 				
 		$(".portlet-header .ui-icon-pencil").click(function() {
-			var widgetContent = $(this).parent().next();
-			var widgetId =  $(widgetContent).parent().attr('id')
-			
-			$.ajax({ 
-                url: editURL, 
-                data: { dashBoardWidgetId: widgetId, timeout: 6000 },
-                success: function(data) { 
-    					if (data)
-    					{
-    						$(widgetContent).empty();
-    						$(widgetContent).append(data);
-    						$(widgetContent).children('form').ajaxForm(function() { 
-    							 loadViewWidgetBody($(widgetContent));      
-    						 }); 
-    					}
-				}, 
-				error: function (XMLHttpRequest, textStatus, errorThrown) { 
-					$(widgetContent).empty();
-					$(widgetContent).append('<div class="errorBox">' + loadError + '</div>');
-				} 
-		
-			});
+			widgetCall(editURL, $(this).parent().next());
+		});
+				
+		$(".portlet-header .ui-icon-gear").click(function () {
+			widgetCall(optionsURL, $(this).parent().next());
 		});
 		
 		$(".portlet-header .ui-icon-help").click(function() {
@@ -132,6 +116,28 @@ function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, remov
 		$(".column").disableSelection();
 		
 		
+	});
+}
+
+function widgetCall(callUrl, widgetContent) {
+	var widgetId = $(widgetContent).parent().attr('id');
+
+	$.ajax({
+		url: callUrl,
+		data: { dashBoardWidgetId: widgetId, timeout: 6000 },
+		success: function(data) {
+			if (data) {
+				$(widgetContent).empty();
+				$(widgetContent).append(data);
+				$(widgetContent).children('form').ajaxForm(function() {
+					 loadViewWidgetBody($(widgetContent));
+				});
+			}
+		},
+		error: function (XMLHttpRequest, textStatus, errorThrown) {
+			$(widgetContent).empty();
+			$(widgetContent).append('<div class="errorBox">' + loadError + '</div>');
+		}
 	});
 }
 

@@ -9,7 +9,6 @@ import myorg.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixframework.pstm.Transaction;
 
 public class DashBoardWidget extends DashBoardWidget_Base {
 
@@ -75,6 +74,10 @@ public class DashBoardWidget extends DashBoardWidget_Base {
 
     public boolean isEditionModeSupported() {
 	return getWidgetController().isEditionModeSupported();
+    }
+
+    public boolean isOptionsModeSupported() {
+	return getWidgetController().isOptionsModeSupported();
     }
 
     public boolean isHelpModeSupported() {
