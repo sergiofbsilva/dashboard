@@ -52,4 +52,9 @@ public class NoteWidget extends WidgetController {
     public String getHelp() {
 	return BundleUtil.getStringFromResourceBundle("resources/DashBoardResources", "widget.help.NoteWidget");
     }
+
+    @Override
+    public String getWidgetDescription() {
+	return BundleUtil.getStringFromResourceBundle("resources/DashBoardResources", "widget.description.NoteWidget");
+    }
 }

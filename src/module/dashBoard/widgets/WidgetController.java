@@ -164,4 +164,12 @@ public abstract class WidgetController {
 	return true;
     }
 
+    /**
+     * This method returns a textual description of the widget that is displayed
+     * to the user when he/she is in the add widget interface and generates a
+     * mouse over event in the "Add" link.
+     */
+
+    public abstract String getWidgetDescription();
+
 }

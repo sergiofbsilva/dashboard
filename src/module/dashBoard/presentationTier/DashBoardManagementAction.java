@@ -16,6 +16,7 @@ import module.dashBoard.widgets.WidgetController;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
 import myorg.presentationTier.actions.ContextBaseAction;
+import myorg.util.BundleUtil;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
@@ -23,7 +24,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter.ChecksumPredicate;
@@ -45,8 +45,9 @@ public class DashBoardManagementAction extends ContextBaseAction {
 			|| httpServletRequest.getQueryString().contains("method=requestWidgetHelp")
 			|| httpServletRequest.getQueryString().contains("method=removeWidgetFromColumn")
 			|| httpServletRequest.getQueryString().contains("method=viewWidget")
-			|| httpServletRequest.getQueryString().contains("method=editWidget") || httpServletRequest
-			.getQueryString().contains("method=editOptions")));
+			|| httpServletRequest.getQueryString().contains("method=editWidget")
+			|| httpServletRequest.getQueryString().contains("method=editOptions") || httpServletRequest
+			.getQueryString().contains("method=controllerDescription")));
 	    }
 	});
     }
@@ -239,22 +240,21 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	return null;
     }
 
-    public final ActionForward doTest(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-	    final HttpServletResponse response) {
+    public ActionForward controllerDescription(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) throws IOException, InstantiationException,
+	    IllegalAccessException, ClassNotFoundException {
 
-	DashBoardPanel panel = Test();
+	String className = request.getParameter("dashBoardWidgetClass");
+	Class<? extends WidgetController> controllerClass = (Class<? extends WidgetController>) Class.forName(className);
+	JsonObject jsonObject = new JsonObject();
 
-	return forwardToDashBoard(panel, request);
-    }
-
-    @Service
-    private DashBoardPanel Test() {
-
-	User user = UserView.getCurrentUser();
-	if (!user.getUserDashBoards().isEmpty()) {
-	    return user.getUserDashBoards().get(0);
-	} else {
-	    throw new RuntimeException("No DashBoard Panel Found!");
+	if (controllerClass != null) {
+	    WidgetController controller = controllerClass.newInstance();
+	    jsonObject.addAttribute("description", controller.getWidgetDescription());
+	    jsonObject.addAttribute("name", BundleUtil.getLocalizedNamedFroClass(controllerClass));
 	}
+
+	writeJsonReply(response, jsonObject);
+	return null;
     }
 }
