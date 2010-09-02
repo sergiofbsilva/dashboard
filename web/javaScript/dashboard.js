@@ -94,7 +94,7 @@ function startDashBoard(numberOfColumns, yesLabel, noLabel, removeMessage, remov
 			widgetCall(optionsURL, $(this).parent().next());
 		});
 		
-		$(".portlet-header .ui-icon-help").mouseover(function() {
+		$(".portlet-header .ui-icon-help").click(function() {
 			var widget = $(this).parent().parent();
 			$.getJSON(helpURL,
 				 	    { dashBoardWidgetId: widget.attr('id') },
