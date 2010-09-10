@@ -56,6 +56,7 @@ startDashBoard(<%= numberOfColumns %>,
 	</html:messages>
 </div>
 
+
 <div id="dashboard" class="mtop15">
 
 	<logic:iterate id="column" indexId="index" name="dashBoard" property="orderedColumns">
@@ -94,3 +95,5 @@ startDashBoard(<%= numberOfColumns %>,
 		</div>
 	</logic:iterate>
 </div>
+
+<div class="clear"></div>
