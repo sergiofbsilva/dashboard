@@ -4,8 +4,11 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-
-
+<bean:define id="theme" name="virtualHost" property="theme.name"/>
+					
+<div id="preload" style="display: none;">
+	<img src="<%= request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() +  request.getContextPath() + "/CSS/" + theme + "jqTheme/images/autocomplete.gif"%>"/>
+</div>
 
 <%@page import="myorg.util.BundleUtil"%><script src="<%= request.getContextPath()%>/javaScript/jquery.alerts.js" type="text/javascript"></script>
 <script src="<%= request.getContextPath()%>/javaScript/alertHandlers.js" type="text/javascript"></script>
@@ -82,7 +85,6 @@ startDashBoard(<%= numberOfColumns %>,
 						<span class="widgetName"><fr:view name="widget" property="widgetController.class" layout="name-resolver"/></span>
 					</div>
 					<div class="portlet-content">
-						<bean:define id="theme" name="virtualHost" property="theme.name"/>
 						<div style="text-align: center">
 							<bean:message key="label.widget.loading" bundle="DASH_BOARD_RESOURCES"/>
 						</div>
