@@ -38,6 +38,7 @@ public class DashBoardManagementAction extends ContextBaseAction {
 
     static {
 	RequestChecksumFilter.registerFilterRule(new ChecksumPredicate() {
+	    @Override
 	    public boolean shouldFilter(HttpServletRequest httpServletRequest) {
 		return !(httpServletRequest.getRequestURI().endsWith("/dashBoardManagement.do")
 			&& httpServletRequest.getQueryString() != null && (httpServletRequest.getQueryString().contains(
@@ -149,6 +150,10 @@ public class DashBoardManagementAction extends ContextBaseAction {
 	    return false;
 	}
 	return true;
+    }
+
+    public static ActionForward forwardToWidget(WidgetRequest request) {
+	return forwardToWidget(request.getWidget(), request.getRequest(), request.getResponse());
     }
 
     private static ActionForward forwardToWidget(DashBoardWidget widget, final HttpServletRequest request,
