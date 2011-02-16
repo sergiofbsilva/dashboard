@@ -59,4 +59,14 @@ public class DashBoardColumn extends DashBoardColumn_Base {
 	widgets.addAll(getWidgets());
 	return widgets;
     }
+
+    public void delete() {
+	removeDashBoardController();
+	removeDashBoardPanel();
+	for (final DashBoardWidget dashBoardWidget : getWidgetsSet()) {
+	    dashBoardWidget.delete();
+	}
+	deleteDomainObject();
+    }
+
 }

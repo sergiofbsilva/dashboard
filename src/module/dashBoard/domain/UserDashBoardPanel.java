@@ -20,4 +20,13 @@ public class UserDashBoardPanel extends UserDashBoardPanel_Base {
 	return user != null && user == getUser();
     }
 
+    public void delete() {
+	removeUser();
+	removeDashBoardController();
+	for (final DashBoardColumn dashBoardColumn : getDashBoardColumnsSet()) {
+	    dashBoardColumn.delete();
+	}
+	deleteDomainObject();
+    }
+
 }

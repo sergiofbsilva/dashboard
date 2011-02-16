@@ -32,7 +32,7 @@ public class DashBoardWidget extends DashBoardWidget_Base {
     }
 
     public WidgetController getWidgetController() {
-	if (getDashBoardColumn() != null && !getDashBoardPanel().isAccessibleToCurrentUser()) {
+	if (getDashBoardColumn() != null && getDashBoardPanel() != null && !getDashBoardPanel().isAccessibleToCurrentUser()) {
 	    throw new DomainException("error.ilegal.access.to.widget");
 	}
 	if (instance == null) {
@@ -55,7 +55,7 @@ public class DashBoardWidget extends DashBoardWidget_Base {
 	if (!isClosable()) {
 	    throw new UnsupportedOperationException();
 	}
-	if (!getDashBoardPanel().isAccessibleToCurrentUser()) {
+	if (getDashBoardPanel() != null && !getDashBoardPanel().isAccessibleToCurrentUser()) {
 	    throw new DomainException("error.ilegal.access.to.widget");
 	}
 	removeDashBoardColumn();
@@ -85,7 +85,8 @@ public class DashBoardWidget extends DashBoardWidget_Base {
     }
 
     public boolean isClosable() {
-	return getWidgetController().isClosable();
+	final WidgetController widgetController = getWidgetController();
+	return widgetController == null || widgetController.isClosable();
     }
 
     public DashBoardPanel getDashBoardPanel() {
