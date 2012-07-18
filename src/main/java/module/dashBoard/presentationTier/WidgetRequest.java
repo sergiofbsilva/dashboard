@@ -34,7 +34,7 @@ import pt.ist.fenixframework.DomainObject;
 
 import module.dashBoard.domain.DashBoardPanel;
 import module.dashBoard.domain.DashBoardWidget;
-import myorg.domain.User;
+import pt.ist.bennu.core.domain.User;
 
 /**
  * 

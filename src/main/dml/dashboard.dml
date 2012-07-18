@@ -86,12 +86,12 @@ relation NoteDashBoardController {
 
 relation DashBoardControllerMyOrg {
 	DashBoardController playsRole dashBoardController;
-	.myorg.domain.MyOrg playsRole myOrg;
+	.pt.ist.bennu.core.domain.MyOrg playsRole myOrg;
 }
 
 relation UserDashBoardPanelUser {
 	UserDashBoardPanel playsRole userDashBoards {
 		multiplicity *;
 	}
-	.myorg.domain.User playsRole user;
+	.pt.ist.bennu.core.domain.User playsRole user;
 }

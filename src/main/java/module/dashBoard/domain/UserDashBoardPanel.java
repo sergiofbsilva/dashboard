@@ -1,7 +1,7 @@
 /*
- * @(#)WidgetLayoutContext.java
+ * @(#)UserDashBoardPanel.java
  *
- * Copyright 2010 Instituto Superior Tecnico
+ * Copyright 2009 Instituto Superior Tecnico
  * Founding Authors: Paulo Abrantes
  * 
  *      https://fenix-ashes.ist.utl.pt/
@@ -22,32 +22,42 @@
  *   along with the Dashboard Module. If not, see <http://www.gnu.org/licenses/>.
  * 
  */
-package module.dashBoard.presentationTier;
+package module.dashBoard.domain;
 
-import org.apache.struts.action.ActionForward;
-
-import module.dashBoard.domain.DashBoardWidget;
-import myorg.presentationTier.Context;
+import pt.ist.bennu.core.domain.User;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * 
+ * @author João Neves
+ * @author Luis Cruz
  * @author Paulo Abrantes
  * 
  */
-public class WidgetLayoutContext extends Context {
+public class UserDashBoardPanel extends UserDashBoardPanel_Base {
 
-    private String widgetBody;
+    protected UserDashBoardPanel() {
+	super();
+    }
+
+    public UserDashBoardPanel(MultiLanguageString name, User user) {
+	super();
+	setName(name);
+	setUser(user);
+    }
 
     @Override
-    public ActionForward forward(String forward) {
-	return new ActionForward(this.widgetBody);
+    public boolean isAccessibleToUser(User user) {
+	return user != null && user == getUser();
     }
 
-    public ActionForward forward() {
-	return forward("");
+    public void delete() {
+	removeUser();
+	removeDashBoardController();
+	for (final DashBoardColumn dashBoardColumn : getDashBoardColumnsSet()) {
+	    dashBoardColumn.delete();
+	}
+	deleteDomainObject();
     }
 
-    public WidgetLayoutContext(DashBoardWidget widget) {
-	this.widgetBody = WidgetBodyResolver.getBodyFor(widget.getWidgetController().getClass());
-    }
 }

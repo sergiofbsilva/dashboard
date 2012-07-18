@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="http://jakarta.apache.org/struts/tags-html" prefix="html"%>
+<%@ taglib uri="http://jakarta.apache.org/struts/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
+<%@ taglib uri="http://jakarta.apache.org/struts/tags-logic" prefix="logic"%>
 
 <bean:define id="theme" name="virtualHost" property="theme.name"/>
 					
@@ -10,11 +10,11 @@
 	<img src="<%= request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() +  request.getContextPath() + "/CSS/" + theme + "jqTheme/images/autocomplete.gif"%>"/>
 </div>
 
-<%@page import="myorg.util.BundleUtil"%><script src="<%= request.getContextPath()%>/javaScript/jquery.alerts.js" type="text/javascript"></script>
+<%@page import="pt.ist.bennu.core.util.BundleUtil"%><script src="<%= request.getContextPath()%>/javaScript/jquery.alerts.js" type="text/javascript"></script>
 <script src="<%= request.getContextPath()%>/javaScript/alertHandlers.js" type="text/javascript"></script>
 
 <%@page import="module.dashBoard.presentationTier.WidgetBodyResolver"%>
-<%@page import="myorg.presentationTier.servlets.filters.contentRewrite.ContentContextInjectionRewriter"%>
+<%@page import="pt.ist.bennu.core.presentationTier.servlets.filters.contentRewrite.ContentContextInjectionRewriter"%>
 <%@page import="pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter"%>
 
 <h2> <fr:view name="dashBoard" property="name"/> </h2>

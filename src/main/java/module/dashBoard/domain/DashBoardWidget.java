@@ -27,9 +27,9 @@ package module.dashBoard.domain;
 import java.util.Comparator;
 
 import module.dashBoard.widgets.WidgetController;
-import myorg.applicationTier.Authenticate.UserView;
-import myorg.domain.User;
-import myorg.domain.exceptions.DomainException;
+import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;

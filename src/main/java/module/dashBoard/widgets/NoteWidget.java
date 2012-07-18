@@ -27,9 +27,9 @@ package module.dashBoard.widgets;
 import module.dashBoard.domain.DashBoardWidget;
 import module.dashBoard.domain.Note;
 import module.dashBoard.presentationTier.WidgetRequest;
-import myorg.domain.User;
-import myorg.util.BundleUtil;
-import myorg.util.ClassNameBundle;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.util.ClassNameBundle;
 
 @ClassNameBundle(bundle = "resources/DashBoardResources", key = "widget.title.NoteWidget")
 /**

@@ -26,8 +26,8 @@ package module.dashBoard.domain;
 
 import module.dashBoard.WidgetRegister;
 import module.dashBoard.widgets.NoteWidget;
-import myorg.domain.ModuleInitializer;
-import myorg.domain.MyOrg;
+import pt.ist.bennu.core.domain.ModuleInitializer;
+import pt.ist.bennu.core.domain.MyOrg;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**

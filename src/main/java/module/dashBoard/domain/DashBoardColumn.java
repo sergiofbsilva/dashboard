@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import myorg.domain.exceptions.DomainException;
+import pt.ist.bennu.core.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**

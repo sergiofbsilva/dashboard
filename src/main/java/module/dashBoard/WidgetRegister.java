@@ -31,8 +31,8 @@ import java.util.TreeSet;
 
 import module.dashBoard.domain.DashBoardPanel;
 import module.dashBoard.widgets.WidgetController;
-import myorg.domain.User;
-import myorg.util.BundleUtil;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.util.BundleUtil;
 
 /**
  * 

@@ -37,10 +37,10 @@ import module.dashBoard.domain.DashBoardPanel;
 import module.dashBoard.domain.DashBoardWidget;
 import module.dashBoard.domain.UserDashBoardPanel;
 import module.dashBoard.widgets.WidgetController;
-import myorg.applicationTier.Authenticate.UserView;
-import myorg.domain.User;
-import myorg.presentationTier.actions.ContextBaseAction;
-import myorg.util.BundleUtil;
+import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
+import pt.ist.bennu.core.util.BundleUtil;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;

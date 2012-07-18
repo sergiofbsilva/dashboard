@@ -31,7 +31,7 @@ import module.dashBoard.domain.DashBoardWidget;
 import module.dashBoard.domain.WidgetOptions;
 import module.dashBoard.presentationTier.DashBoardManagementAction;
 import module.dashBoard.presentationTier.WidgetRequest;
-import myorg.domain.User;
+import pt.ist.bennu.core.domain.User;
 
 /**
  * 
