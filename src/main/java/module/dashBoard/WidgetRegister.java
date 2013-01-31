@@ -42,81 +42,82 @@ import pt.ist.bennu.core.util.BundleUtil;
  */
 public class WidgetRegister {
 
-    public static WidgetAditionPredicate ALWAYS_ADD_PREDICATE = new WidgetAditionPredicate() {
+	public static WidgetAditionPredicate ALWAYS_ADD_PREDICATE = new WidgetAditionPredicate() {
 
-	@Override
-	public boolean canBeAdded(DashBoardPanel panel, User userAdding) {
-	    return true;
+		@Override
+		public boolean canBeAdded(DashBoardPanel panel, User userAdding) {
+			return true;
+		}
+
+	};
+
+	public static Comparator<Class<? extends WidgetController>> WIDGET_NAME_COMPARATOR =
+			new Comparator<Class<? extends WidgetController>>() {
+
+				@Override
+				public int compare(Class<? extends WidgetController> o1, Class<? extends WidgetController> o2) {
+					return BundleUtil.getLocalizedNamedFroClass(o1).compareTo(BundleUtil.getLocalizedNamedFroClass(o2));
+				}
+
+			};
+
+	private static Set<WidgetControllerHolder> availableWidgets = new HashSet<WidgetControllerHolder>();
+
+	public static Set<Class<? extends WidgetController>> getAvailableWidgets(DashBoardPanel panel, User userAdding) {
+
+		Set<Class<? extends WidgetController>> widgetControllers =
+				new TreeSet<Class<? extends WidgetController>>(WIDGET_NAME_COMPARATOR);
+		for (WidgetControllerHolder holder : availableWidgets) {
+			if (holder.canBeAdded(panel, userAdding)) {
+				widgetControllers.add(holder.getController());
+			}
+		}
+		return widgetControllers;
 	}
 
-    };
-
-    public static Comparator<Class<? extends WidgetController>> WIDGET_NAME_COMPARATOR = new Comparator<Class<? extends WidgetController>>() {
-
-	@Override
-	public int compare(Class<? extends WidgetController> o1, Class<? extends WidgetController> o2) {
-	    return BundleUtil.getLocalizedNamedFroClass(o1).compareTo(BundleUtil.getLocalizedNamedFroClass(o2));
+	public static void registerWidget(Class<? extends WidgetController> widgetClass) {
+		availableWidgets.add(new WidgetControllerHolder(widgetClass, ALWAYS_ADD_PREDICATE));
 	}
 
-    };
-
-    private static Set<WidgetControllerHolder> availableWidgets = new HashSet<WidgetControllerHolder>();
-
-    public static Set<Class<? extends WidgetController>> getAvailableWidgets(DashBoardPanel panel, User userAdding) {
-
-	Set<Class<? extends WidgetController>> widgetControllers = new TreeSet<Class<? extends WidgetController>>(
-		WIDGET_NAME_COMPARATOR);
-	for (WidgetControllerHolder holder : availableWidgets) {
-	    if (holder.canBeAdded(panel, userAdding)) {
-		widgetControllers.add(holder.getController());
-	    }
-	}
-	return widgetControllers;
-    }
-
-    public static void registerWidget(Class<? extends WidgetController> widgetClass) {
-	availableWidgets.add(new WidgetControllerHolder(widgetClass, ALWAYS_ADD_PREDICATE));
-    }
-
-    public static void registerWidget(Class<? extends WidgetController> widgetClass, WidgetAditionPredicate predicate) {
-	availableWidgets.add(new WidgetControllerHolder(widgetClass, predicate));
-    }
-
-    public static interface WidgetAditionPredicate {
-	public boolean canBeAdded(DashBoardPanel panel, User userAdding);
-    }
-
-    private static class WidgetControllerHolder {
-	private final Class<? extends WidgetController> controller;
-	private final WidgetAditionPredicate predicate;
-
-	public WidgetControllerHolder(Class<? extends WidgetController> controller, WidgetAditionPredicate predicate) {
-	    this.controller = controller;
-	    this.predicate = predicate;
+	public static void registerWidget(Class<? extends WidgetController> widgetClass, WidgetAditionPredicate predicate) {
+		availableWidgets.add(new WidgetControllerHolder(widgetClass, predicate));
 	}
 
-	public boolean canBeAdded(DashBoardPanel panel, User userAdding) {
-	    return predicate.canBeAdded(panel, userAdding);
+	public static interface WidgetAditionPredicate {
+		public boolean canBeAdded(DashBoardPanel panel, User userAdding);
 	}
 
-	public Class<? extends WidgetController> getController() {
-	    return controller;
-	}
+	private static class WidgetControllerHolder {
+		private final Class<? extends WidgetController> controller;
+		private final WidgetAditionPredicate predicate;
 
-	/*
-	 * (non-Javadoc) Delegating equals and hashCode to class, since we want
-	 * the class to be the identity of this object. This way only one
-	 * instance of each class controller is allowed to be in the
-	 * availableWidgets set at a time.
-	 */
-	@Override
-	public boolean equals(Object obj) {
-	    return controller.equals(obj);
-	}
+		public WidgetControllerHolder(Class<? extends WidgetController> controller, WidgetAditionPredicate predicate) {
+			this.controller = controller;
+			this.predicate = predicate;
+		}
 
-	@Override
-	public int hashCode() {
-	    return controller.hashCode();
+		public boolean canBeAdded(DashBoardPanel panel, User userAdding) {
+			return predicate.canBeAdded(panel, userAdding);
+		}
+
+		public Class<? extends WidgetController> getController() {
+			return controller;
+		}
+
+		/*
+		 * (non-Javadoc) Delegating equals and hashCode to class, since we want
+		 * the class to be the identity of this object. This way only one
+		 * instance of each class controller is allowed to be in the
+		 * availableWidgets set at a time.
+		 */
+		@Override
+		public boolean equals(Object obj) {
+			return controller.equals(obj);
+		}
+
+		@Override
+		public int hashCode() {
+			return controller.hashCode();
+		}
 	}
-    }
 }
