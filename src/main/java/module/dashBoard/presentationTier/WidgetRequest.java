@@ -42,64 +42,64 @@ import pt.ist.fenixframework.DomainObject;
  */
 public class WidgetRequest {
 
-	private HttpServletRequest request;
-	private HttpServletResponse response;
+    private HttpServletRequest request;
+    private HttpServletResponse response;
 
-	private User currentUser;
-	private DashBoardWidget widget;
+    private User currentUser;
+    private DashBoardWidget widget;
 
-	public WidgetRequest(HttpServletRequest request, HttpServletResponse response, DashBoardWidget widget, User user) {
-		this.request = request;
-		this.response = response;
-		this.currentUser = user;
-		this.widget = widget;
-	}
+    public WidgetRequest(HttpServletRequest request, HttpServletResponse response, DashBoardWidget widget, User user) {
+        this.request = request;
+        this.response = response;
+        this.currentUser = user;
+        this.widget = widget;
+    }
 
-	public DomainObject getStateObject() {
-		return this.widget.getStateObject();
-	}
+    public DomainObject getStateObject() {
+        return this.widget.getStateObject();
+    }
 
-	public User getCurrentUser() {
-		return currentUser;
-	}
+    public User getCurrentUser() {
+        return currentUser;
+    }
 
-	protected HttpServletRequest getRequest() {
-		return request;
-	}
+    protected HttpServletRequest getRequest() {
+        return request;
+    }
 
-	public HttpServletResponse getResponse() {
-		return response;
-	}
+    public HttpServletResponse getResponse() {
+        return response;
+    }
 
-	public DashBoardPanel getPanel() {
-		return this.widget.getDashBoardPanel();
-	}
+    public DashBoardPanel getPanel() {
+        return this.widget.getDashBoardPanel();
+    }
 
-	public void setAttribute(String name, Object object) {
-		request.setAttribute(name, object);
-	}
+    public void setAttribute(String name, Object object) {
+        request.setAttribute(name, object);
+    }
 
-	public String getContextPath() {
-		return request.getContextPath();
-	}
+    public String getContextPath() {
+        return request.getContextPath();
+    }
 
-	public DashBoardWidget getWidget() {
-		return widget;
-	}
+    public DashBoardWidget getWidget() {
+        return widget;
+    }
 
-	public <T extends Object> T getRenderedObject(final String id) {
-		final IViewState viewState = RenderUtils.getViewState(id);
-		return (T) getRenderedObject(viewState);
-	}
+    public <T extends Object> T getRenderedObject(final String id) {
+        final IViewState viewState = RenderUtils.getViewState(id);
+        return (T) getRenderedObject(viewState);
+    }
 
-	private <T extends Object> T getRenderedObject(final IViewState viewState) {
-		if (viewState != null) {
-			MetaObject metaObject = viewState.getMetaObject();
-			if (metaObject != null) {
-				return (T) metaObject.getObject();
-			}
-		}
-		return null;
-	}
+    private <T extends Object> T getRenderedObject(final IViewState viewState) {
+        if (viewState != null) {
+            MetaObject metaObject = viewState.getMetaObject();
+            if (metaObject != null) {
+                return (T) metaObject.getObject();
+            }
+        }
+        return null;
+    }
 
 }

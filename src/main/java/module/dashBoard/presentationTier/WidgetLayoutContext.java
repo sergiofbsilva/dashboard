@@ -37,18 +37,18 @@ import pt.ist.bennu.core.presentationTier.Context;
  */
 public class WidgetLayoutContext extends Context {
 
-	private String widgetBody;
+    private String widgetBody;
 
-	@Override
-	public ActionForward forward(String forward) {
-		return new ActionForward(this.widgetBody);
-	}
+    @Override
+    public ActionForward forward(String forward) {
+        return new ActionForward(this.widgetBody);
+    }
 
-	public ActionForward forward() {
-		return forward("");
-	}
+    public ActionForward forward() {
+        return forward("");
+    }
 
-	public WidgetLayoutContext(DashBoardWidget widget) {
-		this.widgetBody = WidgetBodyResolver.getBodyFor(widget.getWidgetController().getClass());
-	}
+    public WidgetLayoutContext(DashBoardWidget widget) {
+        this.widgetBody = WidgetBodyResolver.getBodyFor(widget.getWidgetController().getClass());
+    }
 }
