@@ -28,7 +28,7 @@ import module.dashBoard.WidgetRegister;
 import module.dashBoard.widgets.NoteWidget;
 import pt.ist.bennu.core.domain.ModuleInitializer;
 import pt.ist.bennu.core.domain.MyOrg;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -57,7 +57,7 @@ public class DashBoardController extends DashBoardController_Base implements Mod
         return myOrg.getDashBoardController();
     }
 
-    @Service
+    @Atomic
     public synchronized static void initialize() {
         if (!isInitialized) {
             try {

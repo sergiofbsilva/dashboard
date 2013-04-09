@@ -33,7 +33,7 @@ import java.util.TreeSet;
 import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -81,7 +81,7 @@ public abstract class DashBoardPanel extends DashBoardPanel_Base {
 
     public abstract boolean isAccessibleToUser(User user);
 
-    @Service
+    @Atomic
     public void edit(List<DashBoardColumnBean> beans) {
         if (!isAccessibleToCurrentUser()) {
             throw new DomainException("error.permission.denied");
