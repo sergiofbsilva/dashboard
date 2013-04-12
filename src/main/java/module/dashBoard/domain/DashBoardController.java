@@ -81,4 +81,29 @@ public class DashBoardController extends DashBoardController_Base implements Mod
         WidgetRegister.registerWidget(NoteWidget.class);
     }
 
+    @Deprecated
+    public java.util.Set<module.dashBoard.domain.Note> getNotes() {
+        return getNotesSet();
+    }
+
+    @Deprecated
+    public java.util.Set<module.dashBoard.domain.WidgetOptions> getWidgetsOptions() {
+        return getWidgetsOptionsSet();
+    }
+
+    @Deprecated
+    public java.util.Set<module.dashBoard.domain.DashBoardPanel> getPanels() {
+        return getPanelsSet();
+    }
+
+    @Deprecated
+    public java.util.Set<module.dashBoard.domain.DashBoardColumn> getDashBoardColumns() {
+        return getDashBoardColumnsSet();
+    }
+
+    @Deprecated
+    public java.util.Set<module.dashBoard.domain.DashBoardWidget> getAvailableWidgets() {
+        return getAvailableWidgetsSet();
+    }
+
 }

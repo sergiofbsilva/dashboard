@@ -89,8 +89,8 @@ public class DashBoardWidget extends DashBoardWidget_Base {
         if (getDashBoardPanel() != null && !getDashBoardPanel().isAccessibleToCurrentUser()) {
             throw new DomainException("error.ilegal.access.to.widget");
         }
-        removeDashBoardColumn();
-        removeDashBoardController();
+        setDashBoardColumn(null);
+        setDashBoardController(null);
         getWidgetController().kill(this, UserView.getCurrentUser());
         deleteDomainObject();
     }

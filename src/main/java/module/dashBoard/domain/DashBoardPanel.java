@@ -110,7 +110,7 @@ public abstract class DashBoardPanel extends DashBoardPanel_Base {
     @SuppressWarnings("unchecked")
     public static <T extends DashBoardPanel> List<T> getPanelsForUser(User user, Class<T> panelClass) {
         List<T> panels = new ArrayList<T>();
-        for (DashBoardPanel panel : user.getUserDashBoards()) {
+        for (DashBoardPanel panel : user.getUserDashBoardsSet()) {
             if (panelClass.isAssignableFrom(panel.getClass())) {
                 panels.add((T) panel);
             }
@@ -118,4 +118,10 @@ public abstract class DashBoardPanel extends DashBoardPanel_Base {
 
         return panels;
     }
+
+    @Deprecated
+    public java.util.Set<module.dashBoard.domain.DashBoardColumn> getDashBoardColumns() {
+        return getDashBoardColumnsSet();
+    }
+
 }
