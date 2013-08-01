@@ -28,8 +28,8 @@ import module.dashBoard.domain.DashBoardWidget;
 import module.dashBoard.domain.Note;
 import module.dashBoard.presentationTier.WidgetRequest;
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.BundleUtil;
-import pt.ist.bennu.core.util.ClassNameBundle;
+import pt.ist.bennu.core.i18n.BundleUtil;
+import pt.ist.bennu.core.util.legacy.ClassNameBundle;
 
 @ClassNameBundle(bundle = "resources/DashBoardResources", key = "widget.title.NoteWidget")
 /**
@@ -80,11 +80,11 @@ public class NoteWidget extends WidgetController {
 
     @Override
     public String getHelp() {
-        return BundleUtil.getStringFromResourceBundle("resources/DashBoardResources", "widget.help.NoteWidget");
+        return BundleUtil.getString("resources/DashBoardResources", "widget.help.NoteWidget");
     }
 
     @Override
     public String getWidgetDescription() {
-        return BundleUtil.getStringFromResourceBundle("resources/DashBoardResources", "widget.description.NoteWidget");
+        return BundleUtil.getString("resources/DashBoardResources", "widget.description.NoteWidget");
     }
 }

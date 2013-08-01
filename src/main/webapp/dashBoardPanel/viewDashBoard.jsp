@@ -34,9 +34,7 @@
 <script  type="text/javascript" src="<%=  request.getContextPath() + "/javaScript/dashboard.js"%>"></script>
 <script  type="text/javascript">
 
-<%
-	String title = BundleUtil.getStringFromResourceBundle("resources.DashBoardResources","title.removeWidget");
-%>
+<%String title = LegacyBundleUtil.getStringFromResourceBundle("resources.DashBoardResources","title.removeWidget");%>
 
 startDashBoard(<%= numberOfColumns %>, 
 				   '<bean:message key="true" bundle="MYORG_RESOURCES"/>', 

@@ -1,41 +1,54 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>pt.ist</groupId>
-        <artifactId>bennu-project</artifactId>
-        <version>1.1.0</version>
-    </parent>
+	<parent>
+		<groupId>pt.ist</groupId>
+		<artifactId>fenix-framework-project</artifactId>
+		<version>1.1.0-SNAPSHOT</version>
+		<relativePath></relativePath>
+	</parent>
 
-    <groupId>pt.ist</groupId>
-    <artifactId>dashboard</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
-    <name>dashboard</name>
-    
-    <scm>
-        <connection>scm:git:git@github.com:ist-dsi/dashboard.git</connection>
-        <developerConnection>scm:git:git@github.com:ist-dsi/dashboard.git</developerConnection>
-        <url>http://ist-dsi.github.io/dashboard/</url>
-        <tag>HEAD</tag>
-    </scm>
 
-    <properties>
-        <version.pt.ist.bennu.core>1.1.0</version.pt.ist.bennu.core>
-    </properties>
+	<artifactId>dashboard</artifactId>
+	<version>1.2.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>dashboard</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>pt.ist</groupId>
-            <artifactId>bennu-core</artifactId>
-            <version>${version.pt.ist.bennu.core}</version>
-        </dependency>
-    </dependencies>
+	<scm>
+		<connection>scm:git:git@github.com:ist-dsi/dashboard.git</connection>
+		<developerConnection>scm:git:git@github.com:ist-dsi/dashboard.git</developerConnection>
+		<url>http://ist-dsi.github.io/dashboard/</url>
+		<tag>HEAD</tag>
+	</scm>
 
-    <repositories>
-        <repository>
-            <id>fenix-ashes-maven-repository</id>
-            <url>https://fenix-ashes.ist.utl.pt/nexus/content/groups/fenix-ashes-maven-repository</url>
-        </repository>
-    </repositories>
+	<properties>
+		<version.pt.ist.bennu.core>2.0.0-SNAPSHOT</version.pt.ist.bennu.core>
+		<version.pt.ist.bennu.renderers>3.0.0-SNAPSHOT</version.pt.ist.bennu.renderers>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>pt.ist.bennu</groupId>
+			<artifactId>bennu-core</artifactId>
+			<version>${version.pt.ist.bennu.core}</version>
+		</dependency>
+		<dependency>
+			<groupId>pt.ist.bennu</groupId>
+			<artifactId>bennu-legacy</artifactId>
+			<version>${version.pt.ist.bennu.core}</version>
+		</dependency>
+		<dependency>
+			<groupId>pt.ist.bennu</groupId>
+			<artifactId>bennu-renderers</artifactId>
+			<version>${version.pt.ist.bennu.renderers}</version>
+		</dependency>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>fenix-ashes-maven-repository</id>
+			<url>https://fenix-ashes.ist.utl.pt/nexus/content/groups/fenix-ashes-maven-repository</url>
+		</repository>
+	</repositories>
 </project>

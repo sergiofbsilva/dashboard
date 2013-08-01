@@ -44,10 +44,10 @@ import org.apache.struts.action.ActionMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.legacy.LegacyBundleUtil;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter.ChecksumPredicate;
@@ -134,7 +134,7 @@ public class DashBoardManagementAction extends ContextBaseAction {
     public ActionForward viewWidget(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
         DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
-        User currentUser = UserView.getCurrentUser();
+        User currentUser = Authenticate.getUser();
 
         if (!checkPanelUser((UserDashBoardPanel) widget.getDashBoardPanel(), currentUser)) {
             return null;
@@ -148,7 +148,7 @@ public class DashBoardManagementAction extends ContextBaseAction {
     public ActionForward editWidget(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
         DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
-        User currentUser = UserView.getCurrentUser();
+        User currentUser = Authenticate.getUser();
 
         if (!checkPanelUser((UserDashBoardPanel) widget.getDashBoardPanel(), currentUser)) {
             return null;
@@ -162,7 +162,7 @@ public class DashBoardManagementAction extends ContextBaseAction {
     public ActionForward editOptions(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
         DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
-        User currentUser = UserView.getCurrentUser();
+        User currentUser = Authenticate.getUser();
 
         if (!checkPanelUser((UserDashBoardPanel) widget.getDashBoardPanel(), currentUser)) {
             return null;
@@ -231,7 +231,7 @@ public class DashBoardManagementAction extends ContextBaseAction {
 
         DashBoardPanel panel = getDomainObject(request, "dashBoardId");
         request.setAttribute("dashBoard", panel);
-        request.setAttribute("widgets", WidgetRegister.getAvailableWidgets(panel, UserView.getCurrentUser()));
+        request.setAttribute("widgets", WidgetRegister.getAvailableWidgets(panel, Authenticate.getUser()));
         return forward(request, "/dashBoardPanel/addWidget.jsp");
     }
 
@@ -258,7 +258,7 @@ public class DashBoardManagementAction extends ContextBaseAction {
             final HttpServletResponse response) {
 
         DashBoardWidget widget = getDomainObject(request, "dashBoardWidgetId");
-        return widget.getWidgetController().doSubmit(new WidgetRequest(request, response, widget, UserView.getCurrentUser()));
+        return widget.getWidgetController().doSubmit(new WidgetRequest(request, response, widget, Authenticate.getUser()));
     }
 
     public ActionForward requestWidgetHelp(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
@@ -288,7 +288,7 @@ public class DashBoardManagementAction extends ContextBaseAction {
         if (controllerClass != null) {
             WidgetController controller = controllerClass.newInstance();
             jsonObject.addAttribute("description", controller.getWidgetDescription());
-            jsonObject.addAttribute("name", BundleUtil.getLocalizedNamedFroClass(controllerClass));
+            jsonObject.addAttribute("name", LegacyBundleUtil.getLocalizedNamedFroClass(controllerClass));
         }
 
         writeJsonReply(response, jsonObject);

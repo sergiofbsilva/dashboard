@@ -32,7 +32,7 @@ import java.util.TreeSet;
 import module.dashBoard.domain.DashBoardPanel;
 import module.dashBoard.widgets.WidgetController;
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.util.legacy.LegacyBundleUtil;
 
 /**
  * 
@@ -56,7 +56,7 @@ public class WidgetRegister {
 
                 @Override
                 public int compare(Class<? extends WidgetController> o1, Class<? extends WidgetController> o2) {
-                    return BundleUtil.getLocalizedNamedFroClass(o1).compareTo(BundleUtil.getLocalizedNamedFroClass(o2));
+                    return LegacyBundleUtil.getLocalizedNamedFroClass(o1).compareTo(LegacyBundleUtil.getLocalizedNamedFroClass(o2));
                 }
 
             };

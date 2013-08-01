@@ -30,9 +30,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
+import module.dashBoard.domain.exceptions.DashboardDomainException;
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.exceptions.DomainException;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -76,7 +76,7 @@ public abstract class DashBoardPanel extends DashBoardPanel_Base {
     }
 
     public boolean isAccessibleToCurrentUser() {
-        return isAccessibleToUser(UserView.getCurrentUser());
+        return isAccessibleToUser(Authenticate.getUser());
     }
 
     public abstract boolean isAccessibleToUser(User user);
@@ -84,7 +84,7 @@ public abstract class DashBoardPanel extends DashBoardPanel_Base {
     @Atomic
     public void edit(List<DashBoardColumnBean> beans) {
         if (!isAccessibleToCurrentUser()) {
-            throw new DomainException("error.permission.denied");
+            throw new DashboardDomainException("error.permission.denied");
         }
         for (DashBoardColumnBean bean : beans) {
             DashBoardColumn column = getColumn(bean.getOrder());

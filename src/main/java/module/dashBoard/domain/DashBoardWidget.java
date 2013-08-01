@@ -26,10 +26,10 @@ package module.dashBoard.domain;
 
 import java.util.Comparator;
 
+import module.dashBoard.domain.exceptions.DashboardDomainException;
 import module.dashBoard.widgets.WidgetController;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.exceptions.DomainException;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
@@ -58,13 +58,13 @@ public class DashBoardWidget extends DashBoardWidget_Base {
         super();
         setDashBoardController(DashBoardController.getInstance());
         setWidgetClassName(widgetClass.getName());
-        getWidgetController().init(this, UserView.getCurrentUser());
+        getWidgetController().init(this, Authenticate.getUser());
         setOrderInColumn(0);
     }
 
     public WidgetController getWidgetController() {
         if (getDashBoardColumn() != null && getDashBoardPanel() != null && !getDashBoardPanel().isAccessibleToCurrentUser()) {
-            throw new DomainException("error.ilegal.access.to.widget");
+            throw new DashboardDomainException("error.ilegal.access.to.widget");
         }
         if (instance == null) {
             initializeWidget();
@@ -75,7 +75,7 @@ public class DashBoardWidget extends DashBoardWidget_Base {
     private synchronized void initializeWidget() {
         try {
             instance = (WidgetController) Class.forName(getWidgetClassName()).newInstance();
-            instance.init(this, UserView.getCurrentUser());
+            instance.init(this, Authenticate.getUser());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,11 +87,11 @@ public class DashBoardWidget extends DashBoardWidget_Base {
             throw new UnsupportedOperationException();
         }
         if (getDashBoardPanel() != null && !getDashBoardPanel().isAccessibleToCurrentUser()) {
-            throw new DomainException("error.ilegal.access.to.widget");
+            throw new DashboardDomainException("error.ilegal.access.to.widget");
         }
         setDashBoardColumn(null);
         setDashBoardController(null);
-        getWidgetController().kill(this, UserView.getCurrentUser());
+        getWidgetController().kill(this, Authenticate.getUser());
         deleteDomainObject();
     }
 

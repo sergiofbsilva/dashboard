@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import pt.ist.bennu.core.domain.exceptions.DomainException;
+import module.dashBoard.domain.exceptions.DashboardDomainException;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -59,7 +59,7 @@ public class DashBoardColumn extends DashBoardColumn_Base {
     @Atomic
     public void addWidget(DashBoardWidget widget) {
         if (!getDashBoardPanel().isAccessibleToCurrentUser()) {
-            throw new DomainException("error.permission.denied");
+            throw new DashboardDomainException("error.permission.denied");
         }
         for (DashBoardWidget existingWidget : getWidgets()) {
             existingWidget.setOrderInColumn(existingWidget.getOrderInColumn() + 1);
@@ -70,7 +70,7 @@ public class DashBoardColumn extends DashBoardColumn_Base {
     @Atomic
     public void removeWidget(DashBoardWidget widget) {
         if (!getDashBoardPanel().isAccessibleToCurrentUser()) {
-            throw new DomainException("error.permission.denied");
+            throw new DashboardDomainException("error.permission.denied");
         }
         super.removeWidgets(widget);
     }
